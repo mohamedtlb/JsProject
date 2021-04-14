@@ -1,0 +1,22 @@
+Inspiration pour le code de base:
+https://github.com/DreissenZulu/JS-Quiz-Game
+
+Moult APIs:
+https://developer.mozilla.org/fr/docs/Learn/JavaScript/Client-side_web_APIs/Introduction
+
+Responsive/Grid:
+https://blogs.infinitesquare.com/posts/web/creer-une-mise-en-page-avec-css-grid-layout
+https://www.w3schools.com/Css/css_rwd_grid.asp
+https://css-tricks.com/snippets/css/complete-guide-grid/
+
+Media Queries:
+https://www.w3schools.com/Css/css_rwd_mediaqueries.asp
+
+Forcer le footer en bas/Utiliser 100% de l'espace:
+https://stackoverflow.com/questions/55012845/footer-at-bottom-with-css-grid-cant-figure-it-out
+
+Animation des propriétées Grid par GSAP et FLIP:
+https://greensock.com/forums/topic/24866-whats-a-possible-way-to-animate-positioning-of-css-grid-element/
+
+GSAP Getting Started:
+https://greensock.com/get-started/
