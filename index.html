@@ -11,52 +11,64 @@
     <title>Quiz Educatif!</title>
 </head>
 
-<body>
-    <nav class="navbar nav-light">
-        <a class="navbar-brand" href="./scores.html">Meilleur score</a>
-        <span class="navbar-text">Time: 0</span>
-    </nav>
-    <div class="container">
-        <div id="titleScreen">
-            <h1>êtes vous prêt pour un Quiz éducatif!</h1>
-            <p>
-                Vous êtes étudians sur la faculte de versailles les examens approches et vous ne savez d"ou commencez le challenge
-                educatif vous facilite la vie
-            </p>
-            <button class="btn btn-primary" id="quizStart">Commencez!</button>
-        </div>
+<body class = "quiz">
+  <header class="logo box">
+    Logo SoonTM
+  </header>
 
-        <div id="questionBlock">
-            <h2 id="questionPrompt">Placeholder question! I don't know what to put here yet but
-                it's going to be a difficult question.
-            </h2>
-            <button class="btn btn-primary btn-sm btnOption" id="quizOption1">Wowee</button>
-            <button class="btn btn-primary btn-sm btnOption" id="quizOption2">Oh boy I'm stumped</button>
-            <button class="btn btn-primary btn-sm btnOption" id="quizOption3">This quiz is ridiculously hard</button>
-            <button class="btn btn-primary btn-sm btnOption" id="quizOption4">wdf why this</button>
-        </div>
+  <nav class="menu box navbar nav-light">
+      <a class="navbar-brand" href="./scores.html">Meilleur score</a>
+      d'autres lien, login etc
+      <span class="navbar-text">Time: 0</span>
+  </nav>
 
-        <div id="answerResult"></div>
+  <div class="question box" id="titleScreen">
+      <h1>êtes vous prêt pour un Quiz éducatif!</h1>
+      <p>
+          Vous êtes étudians sur la faculte de versailles les examens approches et vous ne savez d"ou commencez le challenge
+          educatif vous facilite la vie
+      </p>
+      <button class="btn btn-primary" id="quizStart">Commencez!</button>
+  </div>
 
-        <div id="endGameBlock">
-            <h1>All Done!</h1>
-            <p>Your final score is:</p>
-            <h3 id="showScore">DNF</h3>
-            <form id="submitInitials">
-                <div class="form-group">
-                    <label for="inputInitials">Enter Your Initials</label>
-                    <input type="text" class="form-control" id="playerInitials" value="">
-                </div>
-                <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
-            </form>
-            <div class="alert alert-danger" id="alertBox" style="display: none;">
-                Please enter your initials!
-            </div>
-        </div>
-    </div>
 
-    <script src="questions.js"></script>
-    <script src="script.js"></script>
+  <div class="question box"  id = "questionBlock">
+    <h2 id="questionPrompt">Placeholder question! I don't know what to put here yet but
+        it's going to be a difficult question.
+    </h2>
+  </div>
+
+  <main class="main" id = "reponseBlock">
+    <button class="reponse box btn btn-primary btn-sm btnOption" id="quizOption1">OwO</button>
+    <button class="reponse box btn btn-primary btn-sm btnOption" id="quizOption2">Oh boy I'm stumped</button>
+    <button class="reponse box btn btn-primary btn-sm btnOption" id="quizOption3">This quiz is ridiculously hard</button>
+    <button class="reponse box btn btn-primary btn-sm btnOption" id="quizOption4">wdf why this</button>
+  </main>
+
+  <div class="question box" id="answerResult"></div>
+
+  <div class="question box" id="endGameBlock">
+      <h1>All Done!</h1>
+      <p>Your final score is:</p>
+      <h3 id="showScore">DNF</h3>
+      <form id="submitInitials">
+          <div class="form-group">
+              <label for="inputInitials">Enter Your Initials</label>
+              <input type="text" class="form-control" id="playerInitials" value="">
+          </div>
+          <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
+      </form>
+      <div class="alert alert-danger" id="alertBox" style="display: none;">
+          Please enter your initials!
+      </div>
+  </div>
+
+  <footer class="footer box">
+    Footer
+  </footer>
+
+  <script src="questions.js"></script>
+  <script src="script.js"></script>
 </body>
 
 </html>

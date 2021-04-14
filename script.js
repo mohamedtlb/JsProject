@@ -3,6 +3,7 @@ var answerText = "";
 var time = 15 * questions.length;
 var timeLimit;
 var questionDiv = document.querySelector("#questionBlock");
+var reponseDiv = document.querySelector("#reponseBlock");
 var alertBoxDiv = document.querySelector("#alertBox");
 var answerDiv = document.querySelector("#answerResult");
 var endGameDiv = document.querySelector("#endGameBlock");
@@ -24,7 +25,7 @@ if (localStorage.getItem("localHighScores")) {
 function startQuiz() {
     event.stopPropagation();
 
-    document.querySelector("#titleScreen").style = "animation-play-state: running;"
+    document.querySelector("#titleScreen").style = "display:none;"
     document.querySelector(".navbar-text").textContent = "Time: " + time;
 
     // Replace placeholder with the first question
@@ -33,8 +34,9 @@ function startQuiz() {
     // Wait for the title animation to finish, then show the question
     setTimeout(function () {
         document.querySelector("#titleScreen").style = "display: none;";
-        document.querySelector("#questionBlock").style = "display: block;";
-        document.querySelector("#questionBlock").className = "slideUp";
+        document.querySelector("#questionBlock").style = "display: grid;";
+        document.querySelector("#reponseBlock").style = "display: grid;";
+        document.querySelector("#questionBlock").className = "slideUp question box";
     }, 400);
 
     timeLimit = setInterval(function () {
@@ -66,7 +68,8 @@ function changeQuestion() {
         }
         document.querySelector("#questionPrompt").textContent = questionInfo.title;
         // ...And show the question
-        questionDiv.className = "questionFadeIn";
+        questionDiv.className = "questionFadeIn question box";
+        reponseDiv.className = "answerSlideUp main";
     }, 400);
 
 }
@@ -89,19 +92,19 @@ function checkAnswer() {
 
             // This block shows the result of the answer, then hides it after a given time.
             answerDiv.innerHTML = `<hr /> ${answerText}`
-            if (answerDiv.style != "display: block;") {
-                answerDiv.style = "display: block;";
+            if (answerDiv.style != "display: grid;") {
+                answerDiv.style = "display: grid;";
             }
-            answerDiv.className = "answerSlideUp";
+            answerDiv.className = "answerSlideUp question box";
             setTimeout(function () {
-                answerDiv.className = "fadeAway";
+                answerDiv.className = "fadeAway question box";
                 setTimeout(function () {
                     answerDiv.style = "display: none;";
                 }, 300);
             }, 700);
 
             // Slide away the current question to prepare the next
-            questionDiv.className = "questionFadeOut";
+            questionDiv.className = "questionFadeOut question box";
         }
         // questionNum is iterated and the next question is called
         questionNum++;
@@ -122,21 +125,24 @@ function showEndGame() {
 
     // Animation handlers
     if (questionDiv.className != "questionFadeOut") {
-        questionDiv.className = "questionFadeOut";
+        questionDiv.className = "questionFadeOut question box";
     }
     setTimeout(function () {
         questionDiv.style = "display: none;";
+        reponseDiv.style = "display: none;";
+        reponseDiv.className = "";
         answerDiv.style = "display: none;";
-        endGameDiv.style = "display: block;";
-        endGameDiv.className = "slideDown";
+        endGameDiv.style = "display: grid;";
+        endGameDiv.className = "slideDown question box";
+
     }, 700)
 }
 
 function submitAndSaveScore(event) {
     event.preventDefault();
     if (playerInitials.value.trim() == '') {
-        if (alertBoxDiv.style != "display:block;") {
-            alertBoxDiv.style = "display:block;";
+        if (alertBoxDiv.style != "display:grid;") {
+            alertBoxDiv.style = "display:grid;";
 
             setTimeout(function () {
                 alertBoxDiv.style = "display: none;";

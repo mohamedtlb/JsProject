@@ -11,8 +11,8 @@
     <title>QuizScores</title>
 </head>
 
-<body>
-    <div class="container">
+<body class="scoreBG">
+    <div class="container box">
         <h1 class="slideDown" style="position:relative; margin-bottom:0;">Meilleur Score</h1>
         <p class="slideDown" style="font-style: italic;">Comment vous situez-vous parmi les grands?</p>
         <div id="scoresList"></div>
@@ -22,14 +22,14 @@
 
     <script>
         var scoresArray = JSON.parse(localStorage.getItem("localHighScores"));
-        
+
         function Montrerlemeilleur() {
             var scoresList = document.querySelector("#scoresList");
             var html = "";
             var scoreAlternating = false;
             for (var i = 0; i < scoresArray.length; i++) {
                 if (scoreAlternating) {
-                    html += `<h3 class="scoreStyle scoreAltColour">${i + 1}. ${scoresArray[i].initials} - ${scoresArray[i].score}</h3>`
+                    html += `<h3 class="scoreAltColourStyle">${i + 1}. ${scoresArray[i].initials} - ${scoresArray[i].score}</h3>`
                     scoreAlternating = false;
                 } else {
                     html += `<h3 class="scoreStyle">${i + 1}. ${scoresArray[i].initials} - ${scoresArray[i].score}</h3>`

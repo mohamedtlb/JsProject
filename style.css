@@ -1,18 +1,109 @@
+/*Grid sutff*/
 * {
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
 }
 
-.container {
-    margin-top: 40px;
-    max-width: 800px;
-    width: 80%;
+/*Pour le quiz*/
+.quiz
+{
+  min-height: 100vh; /*Use the whole page even if we don't have a lot of text*/
+  background-color: #171717;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows:  8% minmax(30%,auto) auto auto 8%;
+  grid-gap: 20px;
+  grid-template-areas: "logo menu menu menu menu menu"
+                       "question question question question question question"
+                       ". main main main main ."
+                       ". . . . . ." /*Empty space, could be usefull for the jokers*/
+                       "footer footer footer footer footer footer";
 }
 
+.box
+{
+  background: #af00af22;
+  color: #fff;
+  padding: 10px;
+  border: 1px solid #af00af;
+
+}
+
+.logo
+{
+  grid-area: logo;
+  text-align: center;
+  padding: 20px; /*Text centering, remove when we put the pic*/
+}
+
+.menu
+{
+  grid-area: menu;
+}
+
+.question
+{
+  grid-area: question;
+}
+
+.main
+{
+  grid-area: main;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: minmax(100px, auto);
+  grid-gap: 20px;
+}
+
+.footer
+{
+  grid-area: footer;
+  text-align: center;
+}
+
+/*For smaller screens*/
+@media only screen and (max-width: 768px)
+{
+  body{
+    background-color: lightblue;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows:  0% 8% minmax(30%,auto) auto auto 8%;
+    grid-gap: 10px;
+    grid-template-areas: "logo"
+                         "menu"
+                         "question"
+                         "main"
+                         "."
+                         "footer";
+  }
+
+  .logo{
+    display: none;
+  }
+
+  .main{
+    grid-area: main;
+    display: grid;
+    grid-template-columns: 1;
+    grid-auto-rows: auto;
+    grid-gap: 20px;
+    grid-template-areas: "reponse"
+                         "reponse"
+                         "reponse"
+                         "reponse";
+  }
+
+  .reponse{
+    grid-area: reponse;
+    grid-column: 1/ -1;
+    grid-row: auto;
+  }
+}
+
+/*Design stuff from @Med*/
 #titleScreen {
     text-align: center;
-    margin: auto;
-    position: relative;
+    /*margin: auto;*/
     animation-name: title-slide-out;
     animation-fill-mode: forwards;
     animation-timing-function: ease-in;
@@ -21,28 +112,29 @@
 }
 
 #questionBlock {
+    text-align: center;
     display: none;
-    text-align: left;
-    margin: left;
-    position: relative;
+}
+
+#reponseBlock {
+    display: none;
 }
 
 #endGameBlock {
-    display: none;
     text-align: center;
-    margin: auto;
-    position: relative;
+    display: none;
 }
 
 #answerResult {
     display: none;
-    position: fixed;
+    text-align: center;
     color: darkgray;
     font-style: italic;
     font-size: 18pt;
 }
 
 #showScore {
+    display: grid;
     line-height: 0.8;
     margin-bottom: 20px;
     font-size: 8em;
@@ -59,18 +151,27 @@ h1, h2 {
     font-weight: bolder;
     margin-bottom: 30px;
 }
-
 .navbar-brand, .navbar-brand:hover, .navbar-brand:active {
+    text-align: center;
     color: #800080;
 }
 
-.scoreAltColour {
-    background-color: rgb(249, 182, 255);
+.scoreBG {
+  background-color: #171717;
+  text-align: center;
+}
+
+.scoreAltColourStyle {
+    padding: 3px 3px 3px 10px;
+    font-size: 16pt;
+    background-color: #961e96;
+
 }
 
 .scoreStyle {
     padding: 3px 3px 3px 10px;
     font-size: 16pt;
+    background-color: #db1bd1;
 }
 
 .btn-primary {
@@ -93,13 +194,13 @@ h1, h2 {
     margin-bottom: 5px;
 }
 
-/* Animation styles */
+/* Animation styles from @Med*/
 .answerSlideUp {
     animation-name: answer-slide-up;
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
-    animation-iteration-count: 1;
-    animation-duration: 0.30s;
+    /* animation-iteration-count: 1; */
+    animation-duration: 1s;
 }
 
 .slideUp {
@@ -157,11 +258,9 @@ h1, h2 {
 
 @keyframes answer-slide-up {
     0% {
-        bottom: 30%;
         opacity: 0;
     }
     100% {
-        bottom: 50%;
         opacity: 1;
     }
 }
@@ -247,7 +346,7 @@ h1, h2 {
             opacity: 1;
         }
     }
-    
+
     @keyframes fade-away {
         0% {
             bottom: 20%;
