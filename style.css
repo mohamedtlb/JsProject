@@ -63,9 +63,9 @@
 /*For smaller screens*/
 @media only screen and (max-width: 768px)
 {
-  body{
-    background-color: lightblue;
+  .quiz{
     display: grid;
+    background-color: #171717;
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows:  0% 8% minmax(30%,auto) auto auto 8%;
     grid-gap: 10px;
