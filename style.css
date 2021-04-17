@@ -21,6 +21,12 @@
   background-color: var(--mainBG-color);
   display: grid;
   grid-template-columns: repeat(6, 1fr);
+
+  /*-first and last lines should be small
+    -2nd and 3rd will occupy about the same space when the quiz is in effect,
+        min 30% is to allocate enough space for the whole "Welcome to the quiz" thing and still have some
+        space in the box leftofver for visual harmony, it ain't that importan
+    -4th one is empty right now, it give some space to breath but could be used for the jokers*/
   grid-template-rows:  8% minmax(30%,auto) auto auto 8%;
   grid-gap: 20px;
   grid-template-areas: "logo menu menu menu menu menu"
@@ -30,6 +36,8 @@
                        "footer footer footer footer footer footer";
 }
 
+/*Helps with debugging by highlighting each box
+  can also be used design wise*/
 .box
 {
   background: var(--box-color);
@@ -56,6 +64,7 @@
   grid-area: question;
 }
 
+/*Houses or subgrid with the answers */
 .main
 {
   grid-area: main;
@@ -88,6 +97,8 @@
                          "footer";
   }
 
+  /*Since the logo would be on a row alone instead of being with the header we choose
+    not to display it, to save some space*/
   .logo{
     display: none;
   }
@@ -104,6 +115,7 @@
                          "reponse";
   }
 
+  /*Forces the answers to take the whole width of the screen*/
   .reponse{
     grid-area: reponse;
     grid-column: 1/ -1;
