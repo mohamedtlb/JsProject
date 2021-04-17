@@ -43,7 +43,7 @@
   background: var(--box-color);
   color: #fff;
   padding: 10px;
-  border: 1px solid var(--button-color);
+
 
 }
 
@@ -62,6 +62,7 @@
 .question
 {
   grid-area: question;
+  border: 1px solid var(--button-color);
 }
 
 /*Houses or subgrid with the answers */
