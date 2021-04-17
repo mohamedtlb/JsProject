@@ -1,12 +1,12 @@
 /*Constatn colors*/
 :root{
-  --button-color: #af00af;
-  --box-color: #af00af22;
-  --mainBG-color: #171717;
+  --button-color: #f59f05;
+  --box-color: #ff820500;
+  --mainBG-color: #2f3542;
   --navbar-color: #800080;
-  --score-color: #961e96;
-  --scoreAlt-color: #db1bd1;
-  --button-hover-color: #da45da;
+  --score-color:  #db1bd1;
+  --scoreAlt-color: #961e96;
+  --button-hover-color: #ffbf05;
 }
 
 /*Grid sutff*/
