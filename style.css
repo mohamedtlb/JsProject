@@ -1,3 +1,14 @@
+/*Constatn colors*/
+:root{
+  --button-color: #af00af;
+  --box-color: #af00af22;
+  --mainBG-color: #171717;
+  --navbar-color: #800080;
+  --score-color: #961e96;
+  --scoreAlt-color: #db1bd1;
+  --button-hover-color: #da45da;
+}
+
 /*Grid sutff*/
 * {
   box-sizing: border-box;
@@ -7,7 +18,7 @@
 .quiz
 {
   min-height: 100vh; /*Use the whole page even if we don't have a lot of text*/
-  background-color: #171717;
+  background-color: var(--mainBG-color);
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows:  8% minmax(30%,auto) auto auto 8%;
@@ -21,10 +32,10 @@
 
 .box
 {
-  background: #af00af22;
+  background: var(--box-color);
   color: #fff;
   padding: 10px;
-  border: 1px solid #af00af;
+  border: 1px solid var(--button-color);
 
 }
 
@@ -65,7 +76,7 @@
 {
   .quiz{
     display: grid;
-    background-color: #171717;
+    background-color: var(--mainBG-color);
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows:  0% 8% minmax(30%,auto) auto auto 8%;
     grid-gap: 10px;
@@ -153,40 +164,40 @@ h1, h2 {
 }
 .navbar-brand, .navbar-brand:hover, .navbar-brand:active {
     text-align: center;
-    color: #800080;
+    color: var(--navbar-color);
 }
 
 .scoreBG {
-  background-color: #171717;
+  background-color: var(--mainBG-color);
   text-align: center;
 }
 
 .scoreAltColourStyle {
     padding: 3px 3px 3px 10px;
     font-size: 16pt;
-    background-color: #961e96;
+    background-color: var(--score-color);
 
 }
 
 .scoreStyle {
     padding: 3px 3px 3px 10px;
     font-size: 16pt;
-    background-color: #db1bd1;
+    background-color: var(--scoreAlt-color);
 }
 
 .btn-primary {
-    background: #af00af;
-    border-color: #af00af;
+    background: var(--button-color);
+    border-color: var(--button-color);
 }
 
 .btn-primary:hover {
-    background-color: #da45da;
-    border-color: #da45da;
+    background-color: var(--button-hover-color);
+    border-color: var(--button-hover-color);
 }
 
 .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
-    background: #800080;
-    border-color: #800080;
+    background: var(--navbar-color);
+    border-color: var(--navbar-color);
 }
 
 .btnOption {
