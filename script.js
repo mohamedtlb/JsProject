@@ -67,6 +67,8 @@ function changeQuestion() {
             optionButtons[i].value = questionInfo.choices[i];
         }
         document.querySelector("#questionPrompt").textContent = questionInfo.title;
+        document.querySelector("#Prompt").textContent = questionInfo.enonce;
+
         // ...And show the question
         questionDiv.className = "questionFadeIn question box";
         reponseDiv.className = "answerSlideUp main";

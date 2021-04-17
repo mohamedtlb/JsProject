@@ -3,7 +3,7 @@
   --button-color: #f59f05;
   --box-color: #ff820500;
   --mainBG-color: #2f3542;
-  --navbar-color: #800080;
+  --navbar-color: #f00;
   --score-color:  #db1bd1;
   --scoreAlt-color: #961e96;
   --button-hover-color: #ffbf05;
@@ -43,8 +43,6 @@
   background: var(--box-color);
   color: #fff;
   padding: 10px;
-
-
 }
 
 .logo
@@ -62,7 +60,6 @@
 .question
 {
   grid-area: question;
-  border: 1px solid var(--button-color);
 }
 
 /*Houses or subgrid with the answers */
