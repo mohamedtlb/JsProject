@@ -22,7 +22,7 @@
 
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: 8% 1fr 1fr 1fr 1fr 8%;
+  grid-template-rows: 8% 2fr 3fr 3fr 2fr 8%;
   grid-gap: 20px;
   grid-template-areas: "logo      menu     menu     menu     menu     menu "
                        " .         .        .        .        .        .   "
@@ -63,8 +63,8 @@
   /*grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 8% repeat(5, 1fr) 8%;*/
 
-  grid-template-columns: [left] 1fr [center] 1fr [right] 1fr;
-  grid-template-rows: [head] 8% [Userlabel] 1fr [NameForm] 1fr [pswrdLabel] 1fr [pswrdForm] 1fr [interact] 1fr [tail] 8%;
+  grid-template-columns: [left] 1fr [left-center] 1fr [center] 1fr [right-center] 1fr [right] 1fr;
+  grid-template-rows: [head] 8% [Userlabel] 1fr [NameForm] 1fr [bufferNamePswrd] auto [pswrdLabel] 1fr [pswrdForm] 1fr [bufferPswrdInteract] 5% [interact] 1fr [tail] 8%;
 
   grid-gap: 5px;
 
@@ -72,7 +72,7 @@
 
 .userLabel
 {
-  grid-column: center;
+  grid-column: left-center / right;
   grid-row: Userlabel;
   margin: auto;
 }
@@ -98,28 +98,79 @@
   margin: auto;
 }
 
-.recover
+.reveal
 {
-  background-color: red;
+
+  grid-column: right;
+  grid-row: pswrdForm;
+  margin-left: 25%;
+  margin-top: 5%;
 }
 
 .forgot
 {
-  grid-column: left;
+  grid-column: left-center;
   grid-row: interact;
 }
 
 .signin
 {
-  grid-column: right;
+  grid-column: right-center;
   grid-row: interact;
-  width: 50%
-  marging: auto;
 }
 
 .formStyle
 {
   width: 65%;
+}
+
+@media only screen and (max-width: 768px)
+{
+  .login{
+    min-height: 100vh; /*Use the whole page even if we don't have a lot of text*/
+    background-color: var(--mainBG-color);
+    color: var(--text-color);
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 8% 2fr 3fr 3fr 2fr 8%;
+    grid-gap: 5px;
+    grid-template-areas: "menu      menu"
+                         "main      main"
+                         "main      main"
+                         "footer   footer";
+  }
+
+  .logo{
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 300px)
+{
+  .login{
+    min-height: 100vh; /*Use the whole page even if we don't have a lot of text*/
+    background-color: var(--mainBG-color);
+    color: var(--text-color);
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 8% 2fr 3fr 3fr 2fr 8%;
+    grid-gap: 5px;
+    grid-template-areas: "menu"
+                         "main"
+                         "main"
+                         "footer";
+  }
+
+  .logo{
+    display: none;
+  }
+
+  .navbar-band:
+  {
+    text-align: center;
+  }
 }
 
 /*

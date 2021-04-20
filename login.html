@@ -7,12 +7,15 @@
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <link href='https://css.gg/eye-alt.css' rel='stylesheet'>
+      <link href='https://css.gg/eye.css' rel='stylesheet'>
       <link rel="stylesheet" type="text/css" href="./styleLogin.css">
+
       <title>Quiz Educatif!</title>
   </head>
 
   <body class = "login">
-    <header class="logo box">
+    <header class="logo">
       Logo SoonTM
     </header>
 
@@ -28,12 +31,13 @@
     </nav>
 
       <form class="main" id="loginCredentials">
-        <label class="userLabel" for="UserName">Nom d'utilisateur</label>
-        <input type="text" class = "userNameForm formStyle form-control" id="UserName" placeholder="Login">
-        <label class="pswrdLabel" for="pswr">Mot de passe</label>
-        <input type="password" class = "pswrdNameForm formStyle form-control" id="pswr" placeholder="Password">
-        <!-- <i class="reveal fas fa-lock" onclick="show()">Floof</i> -->
+        <label class="userLabel" for="UserName">Login</label>
+        <input type="text" class = "userNameForm formStyle form-control" id="UserName" placeholder="Email">
+        <label class="pswrdLabel" for="pswr">Password</label>
+        <input type="password" class = "pswrdNameForm formStyle form-control" id="pswr" placeholder="Mot de passe">
+        <i class="gg-eye reveal" id="eye" onclick="show()"></i>
 
+        <button type="submit" class="forgot btn btn-primary" id="resetPswrd">Reset</button>
         <button type="submit" class="signin btn btn-primary" id="submitButton">Submit</button>
       </form>
   </body>
@@ -42,12 +46,15 @@
     function show()
     {
       var pswrd = document.getElementById("pswr");
+      var eye = document.getElementById("eye");
       if(pswr.type === "password")
       {
         pswrd.type = "text";
+        eye.className = "gg-eye-alt reveal";
       }
       else {
         pswrd.type = "password";
+        eye.className = "gg-eye reveal";
       }
     }
   </script>
