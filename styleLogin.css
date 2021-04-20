@@ -57,14 +57,14 @@
   text-align: center;
   /*padding: 5%;*/
   font-size: 20px;
-  background-color: var(--altBG-color);
+  /*background-color: var(--altBG-color);*/
 
   display: grid;
   /*grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 8% repeat(5, 1fr) 8%;*/
 
   grid-template-columns: [left] 1fr [center] 1fr [right] 1fr;
-  grid-template-rows: [head] 8% [Userlabel] 1fr [NameForm] 1fr [pswrdLabel] 1fr [pswrdForm] 1fr [tail] 8%;
+  grid-template-rows: [head] 8% [Userlabel] 1fr [NameForm] 1fr [pswrdLabel] 1fr [pswrdForm] 1fr [interact] 1fr [tail] 8%;
 
   grid-gap: 5px;
 
@@ -74,20 +74,28 @@
 {
   grid-column: center;
   grid-row: Userlabel;
+  margin: auto;
 }
 
 .userNameForm
 {
-  background-color: blue;
+  grid-column: left / -1;
+  grid-row: NameForm;
+  margin: auto;
 }
 
 .pswrdLabel
 {
+  grid-column: center;
+  grid-row: pswrdLabel;
+  margin: auto;
 }
 
 .pswrdNameForm
 {
-  background-color: blue;
+  grid-column: left / -1;
+  grid-row: pswrdForm;
+  margin: auto;
 }
 
 .recover
@@ -95,11 +103,24 @@
   background-color: red;
 }
 
-.signin
+.forgot
 {
+  grid-column: left;
+  grid-row: interact;
 }
 
+.signin
+{
+  grid-column: right;
+  grid-row: interact;
+  width: 50%
+  marging: auto;
+}
 
+.formStyle
+{
+  width: 65%;
+}
 
 /*
   Recyclage de style.css

@@ -27,21 +27,15 @@
         </button>
     </nav>
 
-    <main class = "main">
-      <form id="loginCredentials">
+      <form class="main" id="loginCredentials">
         <label class="userLabel" for="UserName">Nom d'utilisateur</label>
-          <div>
-              <input type="text" class = "userNameForm" id="UserName" placeholder="Login">
-          </div>
-          <label class="pswrdLabel" for="pswr">Mot de passe</label>
-          <div>
-              <input type="password" class = "pswrdNameForm" id="pswr" placeholder="Password">
-          </div>
-          <i class="fas fa-lock" onclick="show()">Floof</i>
+        <input type="text" class = "userNameForm formStyle form-control" id="UserName" placeholder="Login">
+        <label class="pswrdLabel" for="pswr">Mot de passe</label>
+        <input type="password" class = "pswrdNameForm formStyle form-control" id="pswr" placeholder="Password">
+        <!-- <i class="reveal fas fa-lock" onclick="show()">Floof</i> -->
 
-          <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
+        <button type="submit" class="signin btn btn-primary" id="submitButton">Submit</button>
       </form>
-    </main>
   </body>
 
   <script>
