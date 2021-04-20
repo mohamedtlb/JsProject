@@ -1,0 +1,125 @@
+/*
+  Paramètrage des coleurs, on les regroupe à un même endroit pour faciliter leur modification
+*/
+:root{
+  --button-color: #f59f05;
+  --mainBG-color: #2f3542;
+  --navbar-color: #f00;
+  --altBG-color:  #f59f05;
+  --button-hover-color: #ffbf05;
+  --text-color: #fff;
+}
+
+/*Grid sutff*/
+* {
+  box-sizing: border-box;
+}
+
+.login{
+  min-height: 100vh; /*Use the whole page even if we don't have a lot of text*/
+  background-color: var(--mainBG-color);
+  color: var(--text-color);
+
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 8% 1fr 1fr 1fr 1fr 8%;
+  grid-gap: 20px;
+  grid-template-areas: "logo      menu     menu     menu     menu     menu "
+                       " .         .        .        .        .        .   "
+                       " .        main     main     main     main      .   "
+                       " .        main     main     main     main      .   "
+                       " .         .        .        .        .        .   "
+                       "footer   footer   footer   footer   footer   footer";
+
+}
+
+.logo
+{
+  grid-area: logo;
+  text-align: center;
+  padding: 20px; /*Text centering, remove when we put the pic*/
+}
+
+.menu
+{
+  grid-area: menu;
+}
+
+.footer
+{
+  grid-area: footer;
+  text-align: center;
+}
+
+.main
+{
+  grid-area: main;
+  text-align: center;
+  /*padding: 5%;*/
+  font-size: 20px;
+  background-color: var(--altBG-color);
+
+  display: grid;
+  /*grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 8% repeat(5, 1fr) 8%;*/
+
+  grid-template-columns: [left] 1fr [center] 1fr [right] 1fr;
+  grid-template-rows: [head] 8% [Userlabel] 1fr [NameForm] 1fr [pswrdLabel] 1fr [pswrdForm] 1fr [tail] 8%;
+
+  grid-gap: 5px;
+
+}
+
+.userLabel
+{
+  grid-column: center;
+  grid-row: Userlabel;
+}
+
+.userNameForm
+{
+  background-color: blue;
+}
+
+.pswrdLabel
+{
+}
+
+.pswrdNameForm
+{
+  background-color: blue;
+}
+
+.recover
+{
+  background-color: red;
+}
+
+.signin
+{
+}
+
+
+
+/*
+  Recyclage de style.css
+*/
+.navbar-brand, .navbar-brand:hover, .navbar-brand:active {
+    text-align: center;
+    color: var(--navbar-color);
+}
+
+.btn-primary {
+    background: var(--button-color);
+    border-color: var(--button-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--button-hover-color);
+    border-color: var(--button-hover-color);
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
+    background: var(--navbar-color);
+    border-color: var(--navbar-color);
+}

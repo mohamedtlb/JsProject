@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <link rel="stylesheet" type="text/css" href="./styleLogin.css">
+      <title>Quiz Educatif!</title>
+  </head>
+
+  <body class = "login">
+    <header class="logo box">
+      Logo SoonTM
+    </header>
+
+    <nav class="menu box navbar nav-light">
+        <a class="navbar-brand" href="./scores.html">
+          <button class="reponse box btn btn-primary btn-sm btnOption">
+            Meilleur score
+          </button>
+        </a>
+        <button class="reponse box btn btn-primary btn-sm btnOption">
+          d'autres lien, login etc
+        </button>
+    </nav>
+
+    <main class = "main">
+      <form id="loginCredentials">
+        <label class="userLabel" for="UserName">Nom d'utilisateur</label>
+          <div>
+              <input type="text" class = "userNameForm" id="UserName" placeholder="Login">
+          </div>
+          <label class="pswrdLabel" for="pswr">Mot de passe</label>
+          <div>
+              <input type="password" class = "pswrdNameForm" id="pswr" placeholder="Password">
+          </div>
+          <i class="fas fa-lock" onclick="show()">Floof</i>
+
+          <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
+      </form>
+    </main>
+  </body>
+
+  <script>
+    function show()
+    {
+      var pswrd = document.getElementById("pswr");
+      if(pswr.type === "password")
+      {
+        pswrd.type = "text";
+      }
+      else {
+        pswrd.type = "password";
+      }
+    }
+  </script>
+
+</html>
