@@ -103,8 +103,8 @@
 
   grid-column: right;
   grid-row: pswrdForm;
+  margin:auto;
   margin-left: 25%;
-  margin-top: 5%;
 }
 
 .forgot
@@ -167,9 +167,9 @@
     display: none;
   }
 
-  .navbar-band:
+  .navbar:
   {
-    text-align: center;
+    margin: auto;
   }
 }
 
