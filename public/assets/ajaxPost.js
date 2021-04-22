@@ -15,6 +15,7 @@ $(document).ready(function(){
        prenom: $('#prenom').val(),
        email: $('#mail').val(),
        pswrd: $('#pswrd').val(),
+       
      };
 //Debugging
 console.log(formData);
