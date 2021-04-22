@@ -45,30 +45,31 @@ app.post('/signUpBeta', function(req, res){
 
   // !!! They are ` and not ' !!! (alt gr + 7)
   //We setup the query to insert the user's credentials into profil
-  var sql = `INSERT INTO profil (ID_Profil, login, password) VALUES (2, '${req.body.email}', '${req.body.pswrd}')`;
+  var sql = `INSERT INTO profil (login, password) VALUES ('${req.body.email}', '${req.body.pswrd}')`;
 
   //We execute the query
   db.query(sql, function (err, results) {
     if(err) { throw err; }
-    console.log(results);
+    //console.log(results);
   });
 
   //We setup the query to insert the user's info into users
-  var sql = `INSERT INTO users (ID_users, nom, prenom, email, password, ID_profil) VALUES
-                        (2, '${req.body.nom}', '${req.body.prenom}', '${req.body.email}', '${req.body.pswrd}', 2)`;
+  var sql = `INSERT INTO users (nom, prenom, email, password, ID_profil) VALUES
+                        ('${req.body.nom}', '${req.body.prenom}', '${req.body.email}', '${req.body.pswrd}', 
+                        (SELECT ID_Profil FROM profil WHERE login LIKE '${req.body.email}'))`;
 
   //We execute the query
   db.query(sql, function (err, results) {
     if(err) { throw err; }
-    console.log(results);
+    //console.log(results);
   });
 
-  /*
+  
   //On fait notre query
   db.query("SELECT * FROM `users`", function (err, results) {
     if (err) { throw err; }
     console.log(results);
-  });*/
+  });
 
   //Temporary
   res.end('Boop');
