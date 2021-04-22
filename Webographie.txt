@@ -1,3 +1,5 @@
+Semaine 1:
+
 Inspiration pour le code de base:
 https://github.com/DreissenZulu/JS-Quiz-Game
 
@@ -20,3 +22,28 @@ https://greensock.com/forums/topic/24866-whats-a-possible-way-to-animate-positio
 
 GSAP Getting Started:
 https://greensock.com/get-started/
+
+---------------------------------------------------------------------------------------------------------
+
+Semaine 1+1:
+
+Excellent suite de tutoriels sur Node JS / express / ejs:
+https://www.youtube.com/watch?v=w-7RQ46RgxU&list=PL4cUxeGkcC9gcy9lrvMJ75z9maRw4byYp&index=1
+
+Node JS en général:
+https://www.w3schools.com/nodejs/default.asp
+
+MySQL pour Node JS:
+https://www.w3schools.com/nodejs/nodejs_mysql.asp
+
+Le readme du package mysql:
+https://www.npmjs.com/package/mysql
+
+Comment gérer un formulaire avec Ajax:
+https://www.digitalocean.com/community/tutorials/submitting-ajax-forms-with-jquery
+
+Explication de document.ready() de JQuery:
+https://learn.jquery.com/using-jquery-core/document-ready/
+
+L'utilité de express.urlencoded
+https://www.geeksforgeeks.org/express-js-express-urlencoded-function/
