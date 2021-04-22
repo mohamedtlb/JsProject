@@ -47,3 +47,6 @@ https://learn.jquery.com/using-jquery-core/document-ready/
 
 L'utilité de express.urlencoded
 https://www.geeksforgeeks.org/express-js-express-urlencoded-function/
+
+Mot de passe visible/camouflé
+https://www.codingnepalweb.com/2020/05/simple-login-form-with-password-show-hide-button.html
