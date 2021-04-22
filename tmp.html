@@ -1,0 +1,15 @@
+<!-- (A) LOAD USERS HERE -->
+<div id="demo"></div>
+
+ <!-- (B) FETCH USERS VIA AJAX -->
+<script>
+// NOTE: RUN WITH HTTP://, NOT FILE://
+window.addEventListener("load", function(){
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', "1d-node.js");
+  xhr.onload = function(){
+    document.getElementById("demo").innerHTML = this.response;
+  };
+  xhr.send();
+});
+</script>

@@ -1,5 +1,24 @@
 {
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
     "mysql": "^2.18.1"
-  }
+  },
+  "name": "jsproject",
+  "description": "Voici un dépot git pour qu'on puisse travailler d'une manière parallèle. - Si vous êtes sûr de l'ébauche que vous avez fait poussez sur la branche master directement. - Sinon creez une nouvelle branche mettant l\"essai sur cette derniere en suite si tout est bon on merge sur la branche principale (master).  - Si vous prenez une information ou un bout de code souvenez vous du site ou le lien pour qu'on puisse à la fin les mettre en webographie.",
+  "version": "1.0.0",
+  "main": "App.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohamedtlb/JsProject.git"
+  },
+  "author": "Mohamed TOLBA - Mohamed Nassim ABBES - Cherif Amanatoulha sy - Lucas LEBRET",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mohamedtlb/JsProject/issues"
+  },
+  "homepage": "https://github.com/mohamedtlb/JsProject#readme"
 }

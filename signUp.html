@@ -15,7 +15,7 @@
   </head>
 
   <body class = "signUp">
-    <header class="logo">
+    <header class="logo" id="demo">
       Logo SoonTM
     </header>
 
@@ -71,20 +71,29 @@
       }
     }
 
-  function show2()
-  {
-    var confPswrd = document.getElementById("confPswrd");
-    var eyeBeta = document.getElementById("eyeBeta");
-    if(confPswrd.type === "password")
+    function show2()
     {
-      confPswrd.type = "text";
-      eyeBeta.className = "gg-eye-alt revealConf";
+      var confPswrd = document.getElementById("confPswrd");
+      var eyeBeta = document.getElementById("eyeBeta");
+      if(confPswrd.type === "password")
+      {
+        confPswrd.type = "text";
+        eyeBeta.className = "gg-eye-alt revealConf";
+      }
+      else {
+        confPswrd.type = "password";
+        eyeBeta.className = "gg-eye revealConf";
+      }
     }
-    else {
-      confPswrd.type = "password";
-      eyeBeta.className = "gg-eye revealConf";
+
+    function sendData(event)
+    {
+      console.log('Pop');
+
+      return;
     }
-  }
+
+    document.getElementById("eye").onclick= sendData;
   </script>
 
 </html>
