@@ -8,5 +8,4 @@ Avec :
 * des svg
 * jQuery et Bootstrap reliés
 
-#### Démarrer projet avec Sass 
-* `npm run sass`
+#### cette maquette est juste le design j'y mettrai le code js 
