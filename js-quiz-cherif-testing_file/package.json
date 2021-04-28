@@ -9,12 +9,12 @@
     
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KobeKenjo/basic_project_file.git"
+    "url": "git+https://github.com/rifche224/basic_project_file.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/KobeKenjo/basic_project_file/issues"
+    "url": "https://github.com/rifche224/basic_project_file/issues"
   },
-  "homepage": "https://github.com/KobeKenjo/basic_project_file#readme"
+  "homepage": "https://github.com/rifche224/basic_project_file#readme"
 }
