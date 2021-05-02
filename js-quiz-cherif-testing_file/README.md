@@ -8,4 +8,5 @@ Avec :
 * des svg
 * jQuery et Bootstrap reliés
 
-#### cette maquette est juste le design j'y mettrai le code js 
+#### le code est fonctionnel 
+il me reste à comprendre comment convertir le resultat d'une requette SQL en un objet en js pour que je puisse tirer directement les questions dans la base de données  
