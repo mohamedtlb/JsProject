@@ -32,6 +32,72 @@ db.connect((err) => {
   console.log("DB connection OK");
 });
 
+app.get('/createQuestion', function(req, res){
+  res.sendFile(__dirname + '/PreparationQuestion.html');
+});
+
+app.post('/createQuestion', function(req, res){
+
+  //On regarde si l'UE est déjà dans la liste des UE qui existe, si non on la créer.
+  var sqlVerifUE = `SELECT libelle FROM categorie WHERE libelle = '${req.body.ue}'`;
+
+  //Execute la querry Select
+  db.query(sqlVerifUE, function (err, resultsVerifUE) {
+    if(err) { throw err; }
+    console.log("Number of affected rows: " + resultsVerifUE.length);
+
+    var okToLaunchInsertQuestion = false;
+
+    if(resultsVerifUE.length >= 2)
+    {
+      console.log("On a 2 fois le même UE dans la table, contactez le DB Admin");
+      console.log(resultsVerifUE);
+      res.end('ERROR');
+    }
+
+    if(resultsVerifUE.length == 1)
+    {
+      okToLaunchInsertQuestion = true;
+    }
+
+    if(resultsVerifUE.length == 0)
+    {
+      //On créer une nouvelle categorie
+      console.log("On va créer une nouvelle UE !");
+
+      // Ideally we'd put that *after* the query but asynchronicity is a mean beast
+      // And using a promise here would force me to duplicate some code into "if(resultsVerifUE.length == 1)"
+      // At least I think and I don't have enough time to polish that right now
+      okToLaunchInsertQuestion = true;
+
+      var sqlNewUE = `INSERT INTO categorie (libelle) VALUES ('${req.body.ue}')`;
+      db.query(sqlNewUE, function (err, resultsNewUE) {
+        if(err) { throw err; }
+        console.log("New UE added !");
+      });
+    }
+
+    console.log("Is it ok ? <" + okToLaunchInsertQuestion + ">");
+    if(okToLaunchInsertQuestion == true)
+    {
+      console.log("On insert la question");
+
+      //Changer categorie en categorie quand on passe en production
+      var sql = `INSERT INTO questionnaire (question, reponse, fausseReponse1, fausseReponse2, fausseReponse3, difficulty, ID_categorie)
+                                    VALUES ('${req.body.question}', '${req.body.proposition1}', '${req.body.proposition2}', '${req.body.proposition3}',
+                                            '${req.body.proposition4}', '${req.body.difficultee}',
+                                            (SELECT ID_categorie FROM categorie WHERE libelle = '${req.body.ue}'))`;
+
+      db.query(sql, function (err, results) {
+        if(err) { throw err; }
+        //console.log(results);
+      });
+    }
+  });
+  //Temporary
+  res.end('Boop');
+});
+
 //Sending the signUpBeta page
 app.get('/signUpBeta', function(req, res){
   res.sendFile(__dirname + '/signUp.html');

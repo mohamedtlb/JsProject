@@ -11,7 +11,7 @@
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script src="/assets/ajaxPost.js"></script>
 
-       <!-- The global bootstrap -->
+      <!-- The global bootstrap -->
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
       <!-- The two eyes  -->
@@ -22,7 +22,7 @@
       <title>Quiz Educatif!</title>
   </head>
 
-  <body class = "signUp">
+  <body class = "signUp" onload='document.myformm.text1.focus()'>
     <header class="logo" id="demo">
       Logo SoonTM
     </header>
@@ -38,7 +38,7 @@
         </button>
     </nav>
 
-      <form class="main" id="signUpCredentials">
+      <form class="main" id="signUpCredentials" name="myformm" action="#">
 
         <label class="nomLabel" for="nom">Nom</label>
         <input type="text" class = "nomForm formStyle form-control" id="nom" placeholder="Nom">
@@ -46,8 +46,9 @@
         <label class="prenomLabel" for="prenom">Prenom</label>
         <input type="text" class = "prenomForm formStyle form-control" id="prenom" placeholder="Prenom">
 
-        <label class="mailLabel" for="mail">Email</label>
-        <input type="text" class = "mailForm formStyle form-control" id="mail" placeholder="Email">
+
+        <label class="mailLabel" for="emailcheck">Email</label>
+        <input type="text" class = "mailForm formStyle form-control" name="text1" id="mail" placeholder="Email">
 
         <label class="pswrdLabel" for="pswrd">Password</label>
         <input type="password" class = "pswrdForm formStyle form-control" id="pswrd" placeholder="Mot de passe">
@@ -57,12 +58,54 @@
 
         <i class="gg-eye reveal" id="eye" onclick="show()"></i>
         <i class="gg-eye revealConf" id="eyeBeta" onclick="show2()"></i>
-
-        <button type="submit" class="signUpButton btn btn-primary" id="signUp">Submit</button>
+       <button type="submit" name="submit" value="Submit" class="signUpButton btn btn-primary" id="signUp" onclick="formChecker()"> Submit</button>
       </form>
-  </body>
+      </body>
 
   <script>
+
+    function formChecker()
+    {
+      ValidateEmail(document.myformm.text1);
+      ValidatePassword();
+    }
+
+    function ValidateEmail(inputText)
+    {
+      var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      if(inputText.value.match(mailformat))
+        {
+        document.myformm.text1.focus();
+        return true;
+        }
+        else
+      {
+      alert("You have entered an invalid email address!");
+      document.myformm.text1.focus();
+      event.preventDefault();
+      return false;
+      }
+    }
+
+    function ValidatePassword()
+    {
+      var pswrd = document.getElementById("pswrd").value;
+      var confPswrd = document.getElementById("confPswrd").value;
+      if(pswrd == "")
+      {
+        alert("Your password cannot be empty !");
+        event.preventDefault();
+        return false;
+      }
+
+      if(pswrd != confPswrd)
+      {
+        alert("Your passwords don't match");
+        event.preventDefault();
+        return false;
+      }
+    }
+
     function show()
     {
       var pswrd = document.getElementById("pswrd");
@@ -94,6 +137,9 @@
       }
     }
 
+
   </script>
+
+
 
 </html>
