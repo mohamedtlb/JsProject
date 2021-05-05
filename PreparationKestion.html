@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inscription</title>
+<meta charset="UTF-8">
+
+<link rel="stylesheet" type="text/css" media="screen" href="formulaire.css" />
+ <script src="/assets/ajaxPostquestion.js"></script>
+
+<script type="text/javascript">
+function verif_donnee(){
+    if(document.myform.qst.value ==""){
+    alert ('Vous avez oublié de saisir votre question c est un champ obligatoire !');
+        return false;
+    }
+    else if(document.myform.PrpVrai.value == ""){
+        alert ('Vous avez oublié de saisir votre  proposition vrai c est un champ obligatoire !');
+        return false;
+    }
+	else if(document.myform.PrpFausse1.value == ""){
+        alert ('Vous avez oublié de saisir votre proposition fausse 1 c est un champ obligatoire !');
+        return false;
+    }
+	else if(document.myform.PrpFausse2.value == ""){
+        alert ('Vous avez oublié de saisir votre proposition fausse 2 c est un champ obligatoire !');
+        return false;
+    }
+	else if(document.myform.PrpFausse3.value == ""){
+        alert ('Vous avez oublié de saisir votre proposition fausse 3 c est un champ obligatoire !');
+        return false;
+    }
+	
+    return true;
+}
+</script>
+</head>
+	
+
+<body background="shutterstock_84047002_6f33ca33-0311-412e-98f8-248c9084f4d9.jpg">
+<header>
+<h1>préparation du Quizz</h1>
+</header>
+<form  method="post"  name="myform">
+<fieldset id="main">
+<legend class="legend">Remplissez la question et les porpositions</legend>
+
+<label>Question</label><textarea name="qst" rows="4" cols="30" id="qst" placeholder="Saisissez votre Question"></textarea><br><br><br>
+
+<label>Proposition vrai</label><input type="prpVrai" name="PrpVrai" id="prpVrai" placeholder="PropositionVrai"></input><br><br><br>
+
+<label>Proposition Fausse 1</label><input type="prpFausse1" name="PrpFausse1" id="propF1" placeholder="Proposition fausse 1"></input><br><br><br>
+
+<label>Proposition Fausse 2</label><input type="prpFausse2" name="PrpFausse2" id="propF2" placeholder="Proposition fausse 2"></input><br><br><br>
+
+<label>Proposition Fausse 3</label><input type="prpFausse3" name="PrpFausse3" id="propF3" placeholder="Proposition fausse 3"></input><br><br><br>
+
+
+<br><br>
+<input type="submit"  onclick="verif_donnee()"  value="enregistrer"> </input>
+<input type="submit"  value="annuler"> </input>
+<br>
+
+</fieldset>
+</form>
+
+<footer id="footer"><p> Bienvenue dans le Quizz educatif  </p></footer>
+</body>
+</html>
