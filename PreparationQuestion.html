@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Inscription</title>
+    <meta charset="UTF-8">
+    <!-- <script src="/assets/ajaxPostquestion.js"></script> -->
+    <!-- The global bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="question.css">
+    <title>Quiz Educatif!</title>
+  </head>
+
+  <body>
+    <!-- <header>
+      <h1>préparation du Quizz</h1>
+    </header>
+
+    <form  method="post"  name="myform">
+    <fieldset id="main">
+    <legend class="legend">Remplissez la question et les porpositions</legend>
+
+    <label>Question</label><textarea name="qst" rows="4" cols="30" id="qst" placeholder="Saisissez votre Question"></textarea><br><br><br>
+
+    <label>Proposition vrai</label><input type="prpVrai" name="PrpVrai" id="prpVrai" placeholder="PropositionVrai"></input><br><br><br>
+
+    <label>Proposition Fausse 1</label><input type="prpFausse1" name="PrpFausse1" id="propF1" placeholder="Proposition fausse 1"></input><br><br><br>
+
+    <label>Proposition Fausse 2</label><input type="prpFausse2" name="PrpFausse2" id="propF2" placeholder="Proposition fausse 2"></input><br><br><br>
+
+    <label>Proposition Fausse 3</label><input type="prpFausse3" name="PrpFausse3" id="propF3" placeholder="Proposition fausse 3"></input><br><br><br>
+
+
+    <br><br>
+    <input type="submit"  onclick="verif_donnee()"  value="enregistrer"> </input>
+    <input type="submit"  value="annuler"> </input>
+    <br>
+
+    </fieldset>
+    </form>
+
+    <footer id="footer"><p> Bienvenue dans le Quizz educatif  </p></footer> -->
+
+    <body class = "question">
+      <header class="logo" id="demo">
+        Logo SoonTM
+      </header>
+
+      <nav class="menu box navbar nav-light">
+          <a class="navbar-brand" href="./scores.html">
+            <button class="reponse box btn btn-primary btn-sm btnOption">
+              Meilleur score
+            </button>
+          </a>
+          <button class="reponse box btn btn-primary btn-sm btnOption">
+            d'autres lien, login etc
+          </button>
+      </nav>
+
+        <form class="main" id="questionCredentials" name="myform" action="#">
+
+          <label class="EnonceLabel" for="enonce">Enonce de la question</label>
+          <!-- <input type="text" class = "EnonceForm formStyle form-control" id="enonce" placeholder="enonce"> -->
+          <textarea class="formStyle form-control EnonceForm" name="enonce" form="myform" id="Enonce" placeholder="Enonce"></textarea>
+
+          <label class="BonneRepLabel" for="BonneRep">Bonne réponse</label>
+          <input type="text" class = "BonneRepForm formStyle form-control" id="BonneRep" placeholder="Bonne Reponse">
+
+          <label class="FRep1Label" for="FRep1">Premiere fausse réponse</label>
+          <input type="text" class = "FRep1Form formStyle form-control" id="FRep1" placeholder="Fausse Réponse">
+
+          <label class="FRep2Label" for="FRep2">Deuxième fausse réponse</label>
+          <input type="text" class = "FRep2Form formStyle form-control" id="FRep2" placeholder="Fausse Réponse">
+
+          <label class="FRep3Label" for="FRep3">Troisième fausse réponse</label>
+          <input type="text" class = "FRep3Form formStyle form-control" id="FRep3" placeholder="Fausse Réponse">
+
+          <label class="DifLabel" for="Dif">Difficultée de la question (1 est facile)</label>
+          <select class = "DifForm formStyle form-control" id="Dif" size="1">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+          </select>
+
+          <label class="UELabel" for="UE">UE de la question</label>
+          <input type="text" class = "UEForm formStyle form-control" id="UE" placeholder="09411">
+
+          <button type="submit" name="submit" value="Submit" class="sendButton btn btn-primary" id="sendButton" onclick="verif_donnee()"> Submit</button>
+        </form>
+        </body>
+
+
+  </body>
+
+  <script type="text/javascript">
+  function verif_donnee(){
+      if(document.getElementById("Enonce").value == ""){
+        alert ('Vous avez oublié de saisir votre question c est un champ obligatoire !');
+        event.preventDefault();
+        return false;
+      }
+      else if(document.getElementById("BonneRep").value == ""){
+          alert ('Vous avez oublié de saisir votre  proposition vrai c est un champ obligatoire !');
+          event.preventDefault();
+          return false;
+      }
+    	else if(document.getElementById("FRep1").value == ""){
+          alert ('Vous avez oublié de saisir votre proposition fausse 1 c est un champ obligatoire !');
+          event.preventDefault();
+          return false;
+        }
+    	else if(document.getElementById("FRep2").value == ""){
+          alert ('Vous avez oublié de saisir votre proposition fausse 2 c est un champ obligatoire !');
+          event.preventDefault();
+          return false;
+        }
+    	else if(document.getElementById("FRep3").value == ""){
+          alert ('Vous avez oublié de saisir votre proposition fausse 3 c est un champ obligatoire !');
+          event.preventDefault();
+          return false;
+        }
+      else if(document.getElementById("UE").value == ""){
+          alert ('Il faut préciser une UE !');
+          event.preventDefault();
+          return false;
+        }
+
+      return true;
+  }
+  </script>
+
+</html>

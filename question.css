@@ -1,0 +1,264 @@
+/*
+  Paramètrage des coleurs, on les regroupe à un même endroit pour faciliter leur modification
+*/
+:root{
+  --button-color: #f59f05;
+  --mainBG-color: #2f3542;
+  --navbar-color: #f00;
+  --altBG-color:  #f59f05;
+  --button-hover-color: #ffbf05;
+  --text-color: #fff;
+}
+
+/*Grid sutff*/
+* {
+  box-sizing: border-box;
+}
+
+.question{
+  min-height: 100vh; /*Use the whole page even if we don't have a lot of text*/
+  background-color: var(--mainBG-color);
+  color: var(--text-color);
+
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 8% 1fr 4fr 4fr 4fr 8%;
+  grid-gap: 20px;
+  grid-template-areas: "logo      menu     menu     menu     menu     menu "
+                       " .         .        .        .        .        .   "
+                       " .        main     main     main     main      .   "
+                       " .        main     main     main     main      .   "
+                       " .        main     main     main     main      .   "
+                       "footer   footer   footer   footer   footer   footer";
+
+}
+
+.logo
+{
+  grid-area: logo;
+  text-align: center;
+  padding: 20px; /*Text centering, remove when we put the pic*/
+}
+
+.menu
+{
+  grid-area: menu;
+}
+
+.footer
+{
+  grid-area: footer;
+  text-align: center;
+}
+
+.main
+{
+  grid-area: main;
+  text-align: center;
+  font-size: 20px;
+
+  display: grid;
+
+  grid-template-columns: [left] 1fr [left-center] 1fr [center] 1fr [right-center] 1fr [right] 1fr;
+  grid-template-rows: [EnonceLabel] 1fr [EnonceForm] 4fr
+                      [bufferEnRep] auto
+                      [BonneRepLabel] 1fr [BonneRepForm] 1fr
+                      [FRep1Label] 1fr [FRep1Form] 1fr
+                      [FRep2Label] 1fr [FRep2Form] 1fr
+                      [FRep3Label] 1fr [FRep3Form] 1fr
+                      [UE_DifficultyLabel] 1fr [UE_DifficultyForm] 1fr
+                      [bufferPswrdInteract] 5%
+                      [interact] 1fr;
+
+  grid-gap: 5px;
+}
+
+.formStyle
+{
+  width: 85%;
+  text-align: center;
+}
+
+.EnonceLabel
+{
+  grid-column: left / -1;
+  grid-row: EnonceLabel;
+  margin: auto;
+}
+
+.EnonceForm
+{
+  grid-column: left / -1;
+  grid-row: EnonceForm;
+  margin: auto;
+}
+
+textarea#Enonce.formStyle.form-control.EnonceForm
+{
+  width: 85%;
+  height:90%;
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+.BonneRepLabel
+{
+  grid-column: left / -1;
+  grid-row: BonneRepLabel;
+  margin: auto;
+}
+
+.BonneRepForm
+{
+  grid-column: left / -1;
+  grid-row: BonneRepForm;
+  margin: auto;
+}
+
+.FRep1Label
+{
+  grid-column: left / -1;
+  grid-row: FRep1Label;
+  margin: auto;
+}
+
+.FRep1Form
+{
+  grid-column: left / -1;
+  grid-row: FRep1Form;
+  margin: auto;
+}
+
+.FRep2Label
+{
+  grid-column: left / -1;
+  grid-row: FRep2Label;
+  margin: auto;
+}
+
+.FRep2Form
+{
+  grid-column: left / -1;
+  grid-row: FRep2Form;
+  margin: auto;
+}
+
+.FRep3Label
+{
+  grid-column: left / -1;
+  grid-row: FRep3Label;
+  margin: auto;
+}
+
+.FRep3Form
+{
+  grid-column: left / -1;
+  grid-row: FRep3Form;
+  margin: auto;
+}
+
+.UELabel
+{
+  grid-column: left / center;
+  grid-row: UE_DifficultyLabel;
+  margin: auto;
+}
+
+.UEForm
+{
+  grid-column: left / center;
+  grid-row: UE_DifficultyForm;
+  margin: auto;
+}
+
+.DifLabel
+{
+  grid-column: right-center / -1;
+  grid-row: UE_DifficultyLabel;
+  margin: auto;
+}
+
+.DifForm
+{
+  grid-column: right-center / -1;
+  grid-row: UE_DifficultyForm;
+  margin: auto;
+}
+
+.sendButton
+{
+  grid-column: center;
+  grid-row: interact;
+}
+
+@media only screen and (max-width: 768px)
+{
+  .login{
+    min-height: 100vh; /*Use the whole page even if we don't have a lot of text*/
+    background-color: var(--mainBG-color);
+    color: var(--text-color);
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 8% 2fr 3fr 3fr 2fr 8%;
+    grid-gap: 5px;
+    grid-template-areas: "menu      menu"
+                         "main      main"
+                         "main      main"
+                         "footer   footer";
+  }
+
+  .logo{
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 300px)
+{
+  .login{
+    min-height: 100vh; /*Use the whole page even if we don't have a lot of text*/
+    background-color: var(--mainBG-color);
+    color: var(--text-color);
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 8% 2fr 3fr 3fr 2fr 8%;
+    grid-gap: 5px;
+    grid-template-areas: "menu"
+                         "main"
+                         "main"
+                         "footer";
+  }
+
+  .logo{
+    display: none;
+  }
+
+  .navbar:
+  {
+    margin: auto;
+  }
+}
+
+/*
+  Recyclage de style.css
+*/
+.navbar-brand, .navbar-brand:hover, .navbar-brand:active {
+    text-align: center;
+    color: var(--navbar-color);
+}
+
+.btn-primary {
+    background: var(--button-color);
+    border-color: var(--button-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--button-hover-color);
+    border-color: var(--button-hover-color);
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
+    background: var(--navbar-color);
+    border-color: var(--navbar-color);
+}
