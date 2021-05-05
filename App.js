@@ -20,10 +20,10 @@ console.log('Listening to port 3000');
 
 //Our connection to the DB
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'user',
-  database: 'mydb'
+  host: 'eu-cdbr-west-01.cleardb.com',
+  user: 'b18bd6b4e35f99',
+  password: 'd317e611',
+  database: 'heroku_ba0a838a03c77b3'
 });
 
 //We check if the connection was successful
@@ -55,7 +55,7 @@ app.post('/signUpBeta', function(req, res){
 
   //We setup the query to insert the user's info into users
   var sql = `INSERT INTO users (nom, prenom, email, password, ID_profil) VALUES
-                        ('${req.body.nom}', '${req.body.prenom}', '${req.body.email}', '${req.body.pswrd}', 
+                        ('${req.body.nom}', '${req.body.prenom}', '${req.body.email}', '${req.body.pswrd}',
                         (SELECT ID_Profil FROM profil WHERE login LIKE '${req.body.email}'))`;
 
   //We execute the query
@@ -64,7 +64,7 @@ app.post('/signUpBeta', function(req, res){
     //console.log(results);
   });
 
-  
+
   //On fait notre query
   db.query("SELECT * FROM `users`", function (err, results) {
     if (err) { throw err; }
