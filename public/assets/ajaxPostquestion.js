@@ -11,13 +11,13 @@ $(document).ready(function(){
 
     //That's the signUp data
     var formData = {
-       question: $('#qst').val(),
-       propostion1: $('#prpVrai').val(),
-       propostion2: $('#propF1').val(),
-       propostion3: $('#propF2').val(),
-       propostion4: $('#propF3').val(),
-       
-       
+       question: $('#Enonce').val(),
+       proposition1: $('#BonneRep').val(),
+       proposition2: $('#FRep1').val(),
+       proposition3: $('#FRep2').val(),
+       proposition4: $('#FRep3').val(),
+       difficultee: $('#Dif').val(),
+       ue: $('#UE').val()
      };
 //Debugging
 console.log(formData);
@@ -25,7 +25,7 @@ console.log(formData);
     //The ajax request
     $.ajax({
       type: 'POST', //We're sending a POST signal
-      url: '/signUpBeta', //The route we're going to
+      url: '/createQuestion', //The route we're going to
       data: formData, //What we're sending in the post
       success: function(data){
       console.log('We do be successful');

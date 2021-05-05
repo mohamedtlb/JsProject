@@ -3,44 +3,18 @@
   <head>
     <title>Inscription</title>
     <meta charset="UTF-8">
-    <!-- <script src="/assets/ajaxPostquestion.js"></script> -->
+    <!-- The scripts necessary for the JQuery/Ajax treatment
+         We'll need to move them to be 'unobtrusive JS' complient-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/assets/ajaxPostquestion.js"></script>
     <!-- The global bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="question.css">
+    <link rel="stylesheet" type="text/css" href="/assets/question.css">
     <title>Quiz Educatif!</title>
   </head>
 
   <body>
-    <!-- <header>
-      <h1>préparation du Quizz</h1>
-    </header>
-
-    <form  method="post"  name="myform">
-    <fieldset id="main">
-    <legend class="legend">Remplissez la question et les porpositions</legend>
-
-    <label>Question</label><textarea name="qst" rows="4" cols="30" id="qst" placeholder="Saisissez votre Question"></textarea><br><br><br>
-
-    <label>Proposition vrai</label><input type="prpVrai" name="PrpVrai" id="prpVrai" placeholder="PropositionVrai"></input><br><br><br>
-
-    <label>Proposition Fausse 1</label><input type="prpFausse1" name="PrpFausse1" id="propF1" placeholder="Proposition fausse 1"></input><br><br><br>
-
-    <label>Proposition Fausse 2</label><input type="prpFausse2" name="PrpFausse2" id="propF2" placeholder="Proposition fausse 2"></input><br><br><br>
-
-    <label>Proposition Fausse 3</label><input type="prpFausse3" name="PrpFausse3" id="propF3" placeholder="Proposition fausse 3"></input><br><br><br>
-
-
-    <br><br>
-    <input type="submit"  onclick="verif_donnee()"  value="enregistrer"> </input>
-    <input type="submit"  value="annuler"> </input>
-    <br>
-
-    </fieldset>
-    </form>
-
-    <footer id="footer"><p> Bienvenue dans le Quizz educatif  </p></footer> -->
-
     <body class = "question">
       <header class="logo" id="demo">
         Logo SoonTM
