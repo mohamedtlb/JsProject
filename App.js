@@ -15,8 +15,8 @@ app.use(express.static('./public'));
 app.use(express.urlencoded({extended: true}));
 
 //We're on port 3000
-app.listen(3000);
-console.log('Listening to port 3000');
+app.listen(process.env.PORT);
+console.log('Listening to port ' + process.env.PORT);
 
 //Our connection to the DB
 const db = mysql.createConnection({
