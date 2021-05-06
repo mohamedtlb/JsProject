@@ -61,6 +61,7 @@ app.get('/createQuestion', function(req, res){
 
 app.post('/createQuestion', function(req, res){
 
+  console.log("In createQuestion");
   //On regarde si l'UE est déjà dans la liste des UE qui existe, si non on la créer.
   var sqlVerifUE = `SELECT libelle FROM categorie WHERE libelle = '${req.body.ue}'`;
 
@@ -137,8 +138,7 @@ app.get('/signUpBeta', function(req, res){
 //When we get a POST request we just display stuff in the console
 app.post('/signUpBeta', function(req, res){
 
-  //THE ID IS HARDCODED RIGHT NOW, IT WILL THEREFORE ONLY WORK ONCE
-  //AFTER THAT YOU'LL GET A 'PRIMARY KEY ALREADY EXISTS OR WHATEVER'
+  console.log("In signUpBeta");
 
   // !!! They are ` and not ' !!! (alt gr + 7)
   //We setup the query to insert the user's credentials into profil
