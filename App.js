@@ -27,34 +27,6 @@ var pool = mysql.createPool({
   database: 'heroku_ba0a838a03c77b3'
 });
 
-// db = mysql.createConnection({
-//   host: 'eu-cdbr-west-01.cleardb.com',
-//   user: 'b18bd6b4e35f99',
-//   password: 'd317e611',
-//   database: 'heroku_ba0a838a03c77b3'
-// });
-//
-// //We check if the connection was successful
-// db.connect((err) => {
-//   if (err) { throw err; }
-//   console.log("DB connection OK");
-// });
-//
-// db.on('error', function(err) {
-//   console.log(err.code);
-//   console.log("Attempting to create a new connection");
-//   db = mysql.createConnection({
-//     host: 'eu-cdbr-west-01.cleardb.com',
-//     user: 'b18bd6b4e35f99',
-//     password: 'd317e611',
-//     database: 'heroku_ba0a838a03c77b3'
-//   });
-//   db.connect((err) => {
-//     if (err) { throw err; }
-//     console.log("DB connection OK");
-//   });
-// });
-
 app.get('/createQuestion', function(req, res){
   res.sendFile(__dirname + '/PreparationQuestion.html');
 });
@@ -140,13 +112,14 @@ app.post('/signUpBeta', function(req, res){
 
   console.log("In signUpBeta");
 
-  // !!! They are ` and not ' !!! (alt gr + 7)
-  //We setup the query to insert the user's credentials into profil
-  var sql = `INSERT INTO profil (login, password) VALUES ('${req.body.email}', '${req.body.pswrd}')`;
-
   //We acquire a connection from the pool
   pool.getConnection(function(err, db) {
   if (err) throw err; // not connected!
+
+
+    // !!! They are ` and not ' !!! (alt gr + 7)
+    //We setup the query to insert the user's credentials into profil
+    var sql = `INSERT INTO profil (login, password) VALUES ('${req.body.email}', '${req.body.pswrd}')`;
 
     //We execute the query
     db.query(sql, function (err, results) {
@@ -154,6 +127,7 @@ app.post('/signUpBeta', function(req, res){
       //console.log(results);
     });
 
+    console.log("Profile Insert OK");
     //We setup the query to insert the user's info into users
     var sql = `INSERT INTO users (nom, prenom, email, password, ID_profil) VALUES
                           ('${req.body.nom}', '${req.body.prenom}', '${req.body.email}', '${req.body.pswrd}',
@@ -167,6 +141,7 @@ app.post('/signUpBeta', function(req, res){
 
 
     // On fait notre query
+    console.log("Select Query");
     db.query("SELECT * FROM `users`", function (err, results) {
       if (err) { throw err; }
       console.log(results);
