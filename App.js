@@ -41,7 +41,10 @@ db.on('error', function(err) {
     password: 'd317e611',
     database: 'heroku_ba0a838a03c77b3'
   });
-
+  db.connect((err) => {
+    if (err) { throw err; }
+    console.log("DB connection OK");
+  });
 });
 
 app.get('/createQuestion', function(req, res){
