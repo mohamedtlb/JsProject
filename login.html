@@ -34,19 +34,36 @@
         </button>
     </nav>
 
-      <form class="main" id="loginCredentials">
+      <form class="main" id="loginCredentials" name="myformm">
         <label class="userLabel" for="UserName">Login</label>
-        <input type="text" class = "userNameForm formStyle form-control" id="UserName" placeholder="Email">
+        <input type="text" class = "userNameForm formStyle form-control" name="text1" id="UserName" placeholder="Email">
         <label class="pswrdLabel" for="pswr">Password</label>
         <input type="password" class = "pswrdNameForm formStyle form-control" id="pswr" placeholder="Mot de passe">
         <i class="gg-eye reveal" id="eye" onclick="show()"></i>
 
         <button type="submit" class="forgot btn btn-primary" id="resetPswrd">Reset</button>
-        <button type="submit" class="signin btn btn-primary" id="submitButton">Submit</button>
+        <button type="submit" class="signin btn btn-primary" onclick="ValidateEmail(document.myformm.text1)" id="submitButton">Submit</button>
       </form>
   </body>
 
   <script>
+    function ValidateEmail(inputText)
+    {
+      var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      if(inputText.value.match(mailformat))
+        {
+        document.myformm.text1.focus();
+        return true;
+        }
+        else
+      {
+      alert("You have entered an invalid email address!");
+      document.myformm.text1.focus();
+      event.preventDefault();
+      return false;
+      }
+    }
+
     function show()
     {
       var pswrd = document.getElementById("pswr");
