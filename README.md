@@ -62,3 +62,17 @@ Pour l'instant faut naviguer par url, les deux pages qui sont sur le serveur son
 - https://awsquizz.herokuapp.com/signUpBeta
 - https://awsquizz.herokuapp.com/createQuestion
 
+## La DB
+Sur Heroku on utilise le clearDB add-on, c'est à dire qu'on a une clearDB qui nous est attribuée. Le plan est gratuit donc c'est pas incroyable ce qu'on a (10 connections max et 5 MB de storage) mais bon, c'est gratuit !
+
+Pour la monitorer, personnellement j'utilise MySQL Workbench 8.0 CE pour windows.
+
+J'vais mettre ici les identifiants de connection, en clair, dans un dépôt git public. 
+C'est une super idée.
+
+```bash
+host: 'eu-cdbr-west-01.cleardb.com',
+user: 'b18bd6b4e35f99',
+password: 'd317e611',
+database: 'heroku_ba0a838a03c77b3'
+```
