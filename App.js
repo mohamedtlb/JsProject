@@ -43,16 +43,13 @@ app.post('/login', function(req, res){
 
     // !!! They are ` and not ' !!! (alt gr + 7)
     //We setup the query to insert the user's credentials into profil
-    console.log(req.body.email);
-    console.log(req.body.pswrd);
-
     var sql = `SELECT login FROM profil WHERE login LIKE '${req.body.email}' AND password LIKE '${req.body.pswrd}'`;
 
     //We execute the query
     db.query(sql, function (err, results) {
       if(err) { throw err; }
 
-      if(results.lenght == 0)
+      if(results.length == 0)
       {
         // Print que le compte n'existe pas sur la page html
         console.log("No account could be found");
