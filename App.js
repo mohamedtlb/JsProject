@@ -31,6 +31,54 @@ app.get('/createQuestion', function(req, res){
   res.sendFile(__dirname + '/PreparationQuestion.html');
 });
 
+app.get('/login', function(req, res){
+  res.sendFile(__dirname + '/login.html');
+});
+
+//When we get a POST request we just display stuff in the console
+app.post('/login', function(req, res){
+
+  console.log("In login");
+
+  //We acquire a connection from the pool
+  pool.getConnection(function(err, db) {
+  if (err) throw err; // not connected!
+
+
+    // !!! They are ` and not ' !!! (alt gr + 7)
+    //We setup the query to insert the user's credentials into profil
+    console.log(req.body.email);
+    console.log(req.body.pswrd);
+
+    var sql = `SELECT login FROM profil WHERE login LIKE '${req.body.email}' AND password LIKE '${req.body.pswrd}'`;
+
+    //We execute the query
+    db.query(sql, function (err, results) {
+      if(err) { throw err; }
+
+      if(results.lenght == 0)
+      {
+        // Print que le compte n'existe pas sur la page html
+        console.log("No account could be found");
+      }
+      else if(results.length == 1)
+      {
+        // Attribution des variables de sessions
+        console.log("Account found");
+      }
+      else {
+        console.log("More than one account with the same credentials ?");
+      }
+    });
+
+
+    db.release();
+  }); // pool closed
+
+  //Temporary
+  res.end('Boop');
+});
+
 app.post('/createQuestion', function(req, res){
 
   console.log("In createQuestion");
