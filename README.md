@@ -1,84 +1,64 @@
-# Mise en route du serveur
+# HeroBranch, la branch de déploie pre-Heroku !
 
-## MàJ des softs
+Cette branche est faite pour être la dernière étape avant de faire un:
 
-### Verifier que vous avez node et npm
-
-Pour afficher la version de node
-``` 
-node -v
-```
-Pour afficher la version de npm
-``` 
-npm -v
+```bash
+git push heroku HeroBranch:main
 ```
 
-### Si bash ne vous retourne pas un numéro de version:
+Dans ce ReadMe nous allons expliquer tout ce qu'il faut faire pour que celà se passe bien !
 
-Mise à jour générale
-```
-sudo apt-get update
-```
-Installation node
-```
-sudo apt-get install node
-```
-Installation npm
-```
-sudo apt-get install npm
+## Push sur Heroku
+### Heroku Toolbelt
+Premièrement il faut la CLI (Command Line Interface) de Heroku, on l'appelle aussi l'Heroku Toolbelt.
+
+Pour ça, en fonction de l'OS sur lequel vous êtes vous avez plusieurs choix possible.
+
+Pour Debian/La VM de l'UVSQ il suffit de faire
+```bash
+curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
 ```
 
-## Récupération du code et des dépendences
+Pour les autres OS, allez voir sur:
+https://devcenter.heroku.com/articles/heroku-cli
 
-Si vous lisez ceci vous avez probablement déjà accès au dépot mais sait-on jamais:
+### Set Heroku comme branche distante
+Pour push sur Heroku c'est relativement simple, il suffit d'ajouter Heroku comme branche distante avec la commande.
 
-```
-git clone https://github.com/mohamedtlb/JsProject.git
-```
-
-On se met dans le dossier du projet
-```
-cd JsProject
+```bash
+heroku git:remote -a awsquizz
 ```
 
-Passez sur la branche active de test:
-```
-git checkout DBtest
-```
-
-Telechargement des dépendences:
-```
-npm install
+### Push
+```bash
+git push heroku HeroBranch:main
 ```
 
-## Comme je suis actuellement un idiot
-### Création de la BD
+## Heroku et mes craintes
+Ne sachant pas encore 100% comment Heroku fonctionne je ne sais pas si vous pouvez push sur Heroku sans faire partie de ma team, ça serait relativement étonnant d'ailleurs.
 
-Lancer le script DBtest.js avec node
-```
-node DBtest
-```
-Arreter le script avec Ctrl+c
+En présentiel on verra si vous pouvez et si non on va se faire une Heroku Team.
 
-Allez sur phpMyAdmin se connecter avec:
+Une fois la team crée, vous pourrez vous login avec la commande
+```bash
+heroku login
 ```
-user: root
-pswrd: user
-```
+Ca vous permettra d'avoir accès à l'app awsquizz.
 
-Aller sur la BDD "mydb", onglet importer.
-Importer le fichier quiz_educatif.sql et l'exécuter.
-
-# Lancer le serveur
-
-On démarre le serveur avec:
+## Travailler en local avec Heroku
+Normalement sans team ça devrait passer
+Il suffit de lancer 
+```bash
+heroku local web
 ```
-node App
+puis
+```bash
+heroku open
 ```
+Pour ouvrire la page d'acceuille du site.
+Vu qu'on en a pas ça ouvre juste https://awsquizz.herokuapp.com/ avec rien dessus.
 
-Pour se connecter à la page de sign Up (la seule page actuellement) on va a l'addresse:
-```
-localhost:3000/signUpBeta
-```
+Pour l'instant faut naviguer par url, les deux pages qui sont sur le serveur sont:
+- https://awsquizz.herokuapp.com/signUpBeta
+- https://awsquizz.herokuapp.com/createQuestion
 
-Et paf.

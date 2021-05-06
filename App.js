@@ -19,7 +19,7 @@ app.listen(process.env.PORT);
 console.log('Listening to port ' + process.env.PORT);
 
 //Our connection to the DB
-const db = mysql.createConnection({
+db = mysql.createConnection({
   host: 'eu-cdbr-west-01.cleardb.com',
   user: 'b18bd6b4e35f99',
   password: 'd317e611',
@@ -30,6 +30,18 @@ const db = mysql.createConnection({
 db.connect((err) => {
   if (err) { throw err; }
   console.log("DB connection OK");
+});
+
+db.on('error', function(err) {
+  console.log(err.code);
+  console.log("Attempting to create a new connection");
+  db = mysql.createConnection({
+    host: 'eu-cdbr-west-01.cleardb.com',
+    user: 'b18bd6b4e35f99',
+    password: 'd317e611',
+    database: 'heroku_ba0a838a03c77b3'
+  });
+
 });
 
 app.get('/createQuestion', function(req, res){
