@@ -50,3 +50,52 @@ https://www.geeksforgeeks.org/express-js-express-urlencoded-function/
 
 Mot de passe visible/camouflé
 https://www.codingnepalweb.com/2020/05/simple-login-form-with-password-show-hide-button.html
+
+---------------------------------------------------------------------------------------------------------
+
+Semaine 1+1+1
+
+Heroku, notre host
+https://dashboard.heroku.com/
+
+Explication sur l'installation de la CLI d'Heroku
+https://devcenter.heroku.com/articles/heroku-cli
+
+Comment déployer une app NodeJs sur heroku
+https://devcenter.heroku.com/articles/deploying-nodejs
+
+Comment lier clearDB à une app NodeJS sur heroku
+https://devcenter.heroku.com/articles/cleardb
+
+Comment push sur Heroku depuis une branche autre que main (et sans tout casser)
+https://devcenter.heroku.com/articles/git#creating-a-heroku-remote
+
+Là où j'ai découvert les variables process.env d'Heroku
+Ici c'est pour récupérer le port qu'Heroku nous attribut afin qu'on puisse l'écouter
+https://stackoverflow.com/questions/28706180/setting-the-port-for-node-js-server-on-heroku
+
+Validation de mot de passe, rien de méchant
+https://www.javatpoint.com/confirm-password-validation-in-javascript
+
+Récupérer le nombres de lignes d'une query SELECT en nodeJS, très simple et ça nous sert bien (c'est results.length)
+https://stackoverflow.com/questions/16199842/find-number-of-rows-in-returned-mysql-result-nodejs
+
+---
+
+Nos connections à clearDB se fermaient toujours abruptement ce qui crashait l'app
+Au début on faisait un db.on('error') pour gérer une reconnection mais avec les pool ça marche bien mieux
+
+Gestion d'erreur mysql/NodeJS
+https://stackoverflow.com/questions/18433124/heroku-and-nodejs-mysql-connection-lost-the-server-closed-the-connection
+https://github.com/mysqljs/mysql#error-handling
+
+Simple pooling avec MySQL
+https://github.com/mysqljs/mysql#pooling-connections
+
+---
+
+Textarea dans une form pour les questions
+https://www.w3schools.com/tags/att_textarea_form.asp
+
+Comment trouver la feuille CSS qui a le dernier mot en terme d'Override/Specificity
+https://developer.chrome.com/docs/devtools/css/overrides/
