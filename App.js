@@ -56,7 +56,7 @@ app.post('/login', function(req, res){
     db.query(sql, function (err, results) {
       if(err) { throw err; }
 
-      if(results.lenght == 0)
+      if(results.length == 0)
       {
         // Print que le compte n'existe pas sur la page html
         console.log("No account could be found");
@@ -68,6 +68,8 @@ app.post('/login', function(req, res){
       }
       else {
         console.log("More than one account with the same credentials ?");
+        console.log(results.length);
+        console.log(results);
       }
     });
 
