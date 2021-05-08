@@ -47,10 +47,9 @@ app.post('/login', function(req, res){
 
     // !!! They are ` and not ' !!! (alt gr + 7)
     //We setup the query to insert the user's credentials into profil
-    console.log(req.body.email);
-    console.log(req.body.pswrd);
-
-    var sql = `SELECT login FROM profil WHERE login LIKE '${req.body.email}' AND password LIKE '${req.body.pswrd}'`;
+    var sql = `SELECT login FROM profil WHERE login LIKE ? AND password LIKE ?`;
+    var inserts = [req.body.email, req.body.pswrd];
+    sql = mysql.format(sql, inserts);
 
     //We execute the query
     db.query(sql, function (err, results) {
@@ -85,7 +84,9 @@ app.post('/createQuestion', function(req, res){
 
   console.log("In createQuestion");
   //On regarde si l'UE est déjà dans la liste des UE qui existe, si non on la créer.
-  var sqlVerifUE = `SELECT libelle FROM cathegorie WHERE libelle = '${req.body.ue}'`;
+  var sqlVerifUE = `SELECT libelle FROM cathegorie WHERE libelle = ?`;
+  var insertsVerifUE = [req.body.ue];
+  sqlVerifUE = mysql.format(sqlVerifUE, insertsVerifUE);
 
   //We acquire a connection from the pool
   pool.getConnection(function(err, db) {
@@ -120,7 +121,10 @@ app.post('/createQuestion', function(req, res){
         // At least I think and I don't have enough time to polish that right now
         okToLaunchInsertQuestion = true;
 
-        var sqlNewUE = `INSERT INTO cathegorie (libelle) VALUES ('${req.body.ue}')`;
+        var sqlNewUE = `INSERT INTO cathegorie SET ?`;
+        var insertNewUE = {libelle: req.body.ue};
+        sqlNewUE = mysql.format(sqlNewUE, insertNewUE);
+
         db.query(sqlNewUE, function (err, resultsNewUE) {
           if(err) { throw err; }
           console.log("New UE added !");
@@ -132,18 +136,25 @@ app.post('/createQuestion', function(req, res){
       {
         console.log("On insert la question");
 
-        //Changer cathegorie en cathegorie quand on passe en production
-        var sql = `INSERT INTO questionnaire (question, reponse, fausseReponse1, fausseReponse2, fausseReponse3, difficulty, ID_cathegorie)
-                                      VALUES ('${req.body.question}', '${req.body.proposition1}', '${req.body.proposition2}', '${req.body.proposition3}',
-                                              '${req.body.proposition4}', '${req.body.difficultee}',
-                                              (SELECT ID_cathegorie FROM cathegorie WHERE libelle = '${req.body.ue}'))`;
+        var sqlSelectLibelle = `SELECT ID_cathegorie FROM cathegorie WHERE libelle = ?`;
+        sqlSelectLibelle = mysql.format(sqlSelectLibelle,  [req.body.ue]);
 
-        db.query(sql, function (err, results) {
-          if(err) { throw err; }
-          //console.log(results);
-        });
-      }
-    });
+        db.query(sqlSelectLibelle, function (err, resultsLibelle)
+        {
+          var sql = `INSERT INTO questionnaire SET ?`;
+          var inserts =  {question: req.body.question, reponse: req.body.proposition1,
+                          fausseReponse1: req.body.proposition2, fausseReponse2: req.body.proposition3,
+                          fausseReponse3: req.body.proposition4, difficulty: req.body.difficultee,
+                          ID_cathegorie: resultsLibelle[0].ID_cathegorie};
+          sql = mysql.format(sql, inserts);
+
+          db.query(sql, function (err, results) {
+            if(err) { throw err; }
+            console.log(results);
+          });// Insert Into Questionnaire
+        });// Select Libelle
+      }// If it's ok to insert la question
+    });// Verif UE
 
     db.release;
   }); //Pool closed
@@ -169,33 +180,41 @@ app.post('/signUpBeta', function(req, res){
 
     // !!! They are ` and not ' !!! (alt gr + 7)
     //We setup the query to insert the user's credentials into profil
-    var sql = `INSERT INTO profil (login, password) VALUES ('${req.body.email}', '${req.body.pswrd}')`;
+    var sql = `INSERT INTO profil SET ?`;
+    var inserts = {login: req.body.email, password: req.body.pswrd}
+    sql = mysql.format(sql, inserts);
+    console.log(sql);
 
     //We execute the query
     db.query(sql, function (err, results) {
       if(err) { throw err; }
-      //console.log(results);
-    });
 
-    console.log("Profile Insert OK");
-    //We setup the query to insert the user's info into users
-    var sql = `INSERT INTO users (nom, prenom, email, password, ID_profil) VALUES
-                          ('${req.body.nom}', '${req.body.prenom}', '${req.body.email}', '${req.body.pswrd}',
-                          (SELECT ID_Profil FROM profil WHERE login LIKE '${req.body.email}'))`;
+      console.log("Profile Insert OK");
+      //We setup the query to insert the user's info into users
 
-    // We execute the query
-    db.query(sql, function (err, results) {
-      if(err) { throw err; }
-      // console.log(results);
-    });
+      var sqlSelectIDPro = `SELECT ID_Profil FROM profil WHERE login LIKE ?`;
+      var insertIDPro = [req.body.email];
+      sqlSelectIDPro = mysql.format(sqlSelectIDPro, insertIDPro);
 
+      db.query(sqlSelectIDPro, function (err, resultsIDPro) {
 
-    // On fait notre query
-    console.log("Select Query");
-    db.query("SELECT * FROM `users`", function (err, results) {
-      if (err) { throw err; }
-      console.log(results);
-    });
+        var sql = `INSERT INTO users SET ?`;
+        var inserts = {nom: req.body.nom, prenom: req.body.prenom, email: req.body.email,
+                       password: req.body.pswrd, ID_profil: resultsIDPro[0].ID_Profil};
+        sql = mysql.format(sql, inserts);
+
+        // We execute the query
+        db.query(sql, function (err, results) {
+          if(err) { throw err; }
+          // On fait notre query
+            console.log("Select Query");
+            db.query("SELECT * FROM `users`", function (err, results) {
+              if (err) { throw err; }
+              console.log(results);
+          });// Select Querry
+        });// Insert Into Users Querry
+      });// Select ID_Profil Querry
+    });// Insert Profil
 
     db.release();
   }); // pool closed
