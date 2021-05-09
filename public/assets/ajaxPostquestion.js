@@ -28,9 +28,9 @@ console.log(formData);
       url: '/createQuestion', //The route we're going to
       data: formData, //What we're sending in the post
       success: function(data){
-      console.log('We do be successful');
+        console.log('We do be successful');
 
-      location.reload();
+        location.reload();
       }
     });
     return false;
