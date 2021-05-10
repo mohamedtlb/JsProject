@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<html lang="fr">
+
 <html>
   <head>
     <title>Inscription</title>
@@ -32,11 +34,11 @@
           </button>
       </nav>
 
-        <form class="main" id="questionCredentials" name="myform" action="#">
+        <form class="main" id="questionCredentials" name="myform" action="#" autocomplete="off">
 
           <label class="EnonceLabel" for="enonce">Enonce de la question</label>
           <!-- <input type="text" class = "EnonceForm formStyle form-control" id="enonce" placeholder="enonce"> -->
-          <textarea class="formStyle form-control EnonceForm" name="enonce" form="myform" id="Enonce" placeholder="Enonce"></textarea>
+          <textarea class="formStyle form-control EnonceForm" name="enonce" form="myform" id="Enonce" placeholder="Enonce" autocomplete="off"></textarea>
 
           <label class="BonneRepLabel" for="BonneRep">Bonne réponse</label>
           <input type="text" class = "BonneRepForm formStyle form-control" id="BonneRep" placeholder="Bonne Reponse">
@@ -65,7 +67,7 @@
           </select>
 
           <label class="UELabel" for="UE">UE de la question</label>
-          <input type="text" class = "UEForm formStyle form-control" id="UE" placeholder="09411">
+          <input type="number" step="1" pattern="\d+" class = "UEForm formStyle form-control" id="UE" placeholder="09411">
 
           <button type="submit" name="submit" value="Submit" class="sendButton btn btn-primary" id="sendButton" onclick="verif_donnee()"> Submit</button>
         </form>
@@ -102,7 +104,7 @@
           return false;
         }
       else if(document.getElementById("UE").value == ""){
-          alert ('Il faut préciser une UE !');
+          alert ('UE non valide (Pas besoin de mettre les lettres)');
           event.preventDefault();
           return false;
         }
