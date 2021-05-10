@@ -98,7 +98,7 @@ app.post('/createQuestion', function(req, res){
 
   console.log("In createQuestion");
   //On regarde si l'UE est déjà dans la liste des UE qui existe, si non on la créer.
-  var sqlVerifUE = `SELECT libelle FROM cathegorie WHERE libelle = ?`;
+  var sqlVerifUE = `SELECT libelle FROM categorie WHERE libelle = ?`;
   var insertsVerifUE = [req.body.ue];
   sqlVerifUE = mysql.format(sqlVerifUE, insertsVerifUE);
 
@@ -127,7 +127,7 @@ app.post('/createQuestion', function(req, res){
 
       if(resultsVerifUE.length == 0)
       {
-        //On créer une nouvelle cathegorie
+        //On créer une nouvelle categorie
         console.log("On va créer une nouvelle UE !");
 
         // Ideally we'd put that *after* the query but asynchronicity is a mean beast
@@ -135,7 +135,7 @@ app.post('/createQuestion', function(req, res){
         // At least I think and I don't have enough time to polish that right now
         okToLaunchInsertQuestion = true;
 
-        var sqlNewUE = `INSERT INTO cathegorie SET ?`;
+        var sqlNewUE = `INSERT INTO categorie SET ?`;
         var insertNewUE = {libelle: req.body.ue};
         sqlNewUE = mysql.format(sqlNewUE, insertNewUE);
 
@@ -150,7 +150,7 @@ app.post('/createQuestion', function(req, res){
       {
         console.log("On insert la question");
 
-        var sqlSelectLibelle = `SELECT ID_cathegorie FROM cathegorie WHERE libelle = ?`;
+        var sqlSelectLibelle = `SELECT ID_categorie FROM categorie WHERE libelle = ?`;
         sqlSelectLibelle = mysql.format(sqlSelectLibelle,  [req.body.ue]);
 
         db.query(sqlSelectLibelle, function (err, resultsLibelle)
@@ -159,7 +159,7 @@ app.post('/createQuestion', function(req, res){
           var inserts =  {question: req.body.question, reponse: req.body.proposition1,
                           fausseReponse1: req.body.proposition2, fausseReponse2: req.body.proposition3,
                           fausseReponse3: req.body.proposition4, difficulty: req.body.difficultee,
-                          ID_cathegorie: resultsLibelle[0].ID_cathegorie};
+                          ID_categorie: resultsLibelle[0].ID_categorie};
           sql = mysql.format(sql, inserts);
 
           db.query(sql, function (err, results) {

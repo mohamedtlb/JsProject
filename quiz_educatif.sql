@@ -25,11 +25,11 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `cathegorie`
+-- Structure de la table `categorie`
 --
 
-CREATE TABLE `cathegorie` (
-  `ID_Cathegorie` int(11) NOT NULL,
+CREATE TABLE `categorie` (
+  `ID_categorie` int(11) NOT NULL,
   `libelle` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -58,7 +58,8 @@ CREATE TABLE `questionnaire` (
   `fausseReponse1` varchar(255) NOT NULL,
   `fausseReponse2` varchar(255) NOT NULL,
   `fausseReponse3` varchar(255) NOT NULL,
-  `ID_Cathegorie` int(11) NOT NULL
+  `difficulty` int NOT NULL,
+  `ID_categorie` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -95,10 +96,10 @@ CREATE TABLE `users` (
 --
 
 --
--- Index pour la table `cathegorie`
+-- Index pour la table `categorie`
 --
-ALTER TABLE `cathegorie`
-  ADD PRIMARY KEY (`ID_Cathegorie`);
+ALTER TABLE `categorie`
+  ADD PRIMARY KEY (`ID_categorie`);
 
 --
 -- Index pour la table `profil`
@@ -111,7 +112,7 @@ ALTER TABLE `profil`
 --
 ALTER TABLE `questionnaire`
   ADD PRIMARY KEY (`ID_Questionnaire`),
-  ADD KEY `ID_Cathegorie` (`ID_Cathegorie`);
+  ADD KEY `ID_categorie` (`ID_categorie`);
 
 --
 -- Index pour la table `quiz`
@@ -133,10 +134,10 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT pour la table `cathegorie`
+-- AUTO_INCREMENT pour la table `categorie`
 --
-ALTER TABLE `cathegorie`
-  MODIFY `ID_Cathegorie` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `categorie`
+  MODIFY `ID_categorie` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `profil`
@@ -170,7 +171,7 @@ ALTER TABLE `users`
 -- Contraintes pour la table `questionnaire`
 --
 ALTER TABLE `questionnaire`
-  ADD CONSTRAINT `questionnaire_ibfk_1` FOREIGN KEY (`ID_Cathegorie`) REFERENCES `cathegorie` (`ID_Cathegorie`) ON DELETE CASCADE;
+  ADD CONSTRAINT `questionnaire_ibfk_1` FOREIGN KEY (`ID_categorie`) REFERENCES `categorie` (`ID_categorie`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `quiz`
