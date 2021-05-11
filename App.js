@@ -2,11 +2,16 @@
   Wouldn't have been possible without this 37 youtube videos
   https://www.youtube.com/watch?v=w-7RQ46RgxU&list=PL4cUxeGkcC9gcy9lrvMJ75z9maRw4byYp&index=1
 */
-
+// this is express_module that we have include
+const session = require('express-session');
 var express = require('express');
 var mysql = require('mysql');
 
+
 var app = express();
+
+// include of session
+app.use(session({secret: 'ssshhhhh', saveUninitialized:true, resave: false}));
 
 //static for the static files like *.css
 app.use(express.static('./public'));
@@ -30,9 +35,13 @@ var pool = mysql.createPool({
 app.get('/createQuestion', function(req, res){
   res.sendFile(__dirname + '/PreparationQuestion.html');
 });
-
+// variables session
+var sess;
 app.get('/login', function(req, res){
   res.sendFile(__dirname + '/login.html');
+    sess=req.session;
+    sess.email; // equivalent to $_SESSION['email'] if you don't understand in PHP.
+    sess.pswr;
 });
 
 //When we get a POST request we just display stuff in the console
@@ -59,11 +68,16 @@ app.post('/login', function(req, res){
       {
         // Print que le compte n'existe pas sur la page html
         console.log("No account could be found");
+        req.session.destroy();
+        res.redirect("/login.html");
       }
       else if(results.length == 1)
       {
         // Attribution des variables de sessions
         console.log("Account found");
+        sess.email = req.body.email;
+        console.log(sess.email);
+        res.redirect("/index.html");
       }
       else {
         console.log("More than one account with the same credentials ?");
