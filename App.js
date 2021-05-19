@@ -6,7 +6,7 @@
 const session = require('express-session');
 var express = require('express');
 var mysql = require('mysql');
-
+const bcrypt = require('bcrypt')
 
 var app = express();
 
@@ -19,18 +19,33 @@ app.use(express.static('./public'));
 //urlencoder will parse our POST data
 app.use(express.urlencoded({extended: true}));
 
+app.set('port', process.env.PORT || 3000);
+
 //We're on port 3000
-app.listen(3000);
-console.log('Listening to port 3000');
+app.listen(app.get('port'));
+console.log('Listening to port ' + app.get('port'));
 
 //Our connection to the DB
-var pool = mysql.createPool({
-  connectionLimit : 10,
-  host: 'localhost',
-  user: 'root',
-  password: 'user',
-  database: 'mydb'
-});
+if(app.get('port') == 3000) //Local w/ Node App or Nodemon App
+{
+  var pool = mysql.createPool({
+    connectionLimit : 10,
+    host: 'localhost',
+    user: 'root',
+    password: 'user',
+    database: 'mydb'
+  });
+
+} else // Heroku
+{
+  var pool = mysql.createPool({
+    connectionLimit : 10,
+    host: 'eu-cdbr-west-01.cleardb.com',
+    user: 'b18bd6b4e35f99',
+    password: 'd317e611',
+    database: 'heroku_ba0a838a03c77b3'
+  });
+}
 
 app.get('/createQuestion', function(req, res){
   res.sendFile(__dirname + '/PreparationQuestion.html');
@@ -56,8 +71,8 @@ app.post('/login', function(req, res){
 
     // !!! They are ` and not ' !!! (alt gr + 7)
     //We setup the query to insert the user's credentials into profil
-    var sql = `SELECT login FROM profil WHERE login LIKE ? AND password LIKE ?`;
-    var inserts = [req.body.email, req.body.pswrd];
+    var sql = `SELECT password FROM profil WHERE login LIKE ?`;
+    var inserts = [req.body.email];
     sql = mysql.format(sql, inserts);
 
     //We execute the query
@@ -73,11 +88,20 @@ app.post('/login', function(req, res){
       }
       else if(results.length == 1)
       {
-        // Attribution des variables de sessions
-        console.log("Account found");
-        sess.email = req.body.email;
-        console.log(sess.email);
-        res.redirect("/index.html");
+        var hash = results.rows[0].password;
+        bcrypt.compare(req.body.pswrd, hash, function(err, res) {
+          if(res)
+          {
+            // Attribution des variables de sessions
+            console.log("Account found");
+            sess.email = req.body.email;
+            console.log(sess.email);
+            res.redirect("/index.html");
+          }
+          else {
+            console.log("Wrong password");
+          }
+        });
       }
       else {
         console.log("More than one account with the same credentials ?");
@@ -85,7 +109,6 @@ app.post('/login', function(req, res){
         console.log(results);
       }
     });
-
 
     db.release();
   }); // pool closed
@@ -191,44 +214,49 @@ app.post('/signUpBeta', function(req, res){
   pool.getConnection(function(err, db) {
   if (err) throw err; // not connected!
 
+    // We prepare the password by generating salt and hashing it
+    const saltRounds = 10;
 
-    // !!! They are ` and not ' !!! (alt gr + 7)
-    //We setup the query to insert the user's credentials into profil
-    var sql = `INSERT INTO profil SET ?`;
-    var inserts = {login: req.body.email, password: req.body.pswrd}
-    sql = mysql.format(sql, inserts);
-    console.log(sql);
+    bcrypt.hash(req.body.pswrd, saltRounds, function(err, hash) {
+      console.log("Hpas: " + hash);
+      // !!! They are ` and not ' !!! (alt gr + 7)
+      //We setup the query to insert the user's credentials into profil
+      var sql = `INSERT INTO profil SET ?`;
+      var inserts = {login: req.body.email, password: hash}
+      sql = mysql.format(sql, inserts);
+      console.log(sql);
 
-    //We execute the query
-    db.query(sql, function (err, results) {
-      if(err) { throw err; }
+      //We execute the query
+      db.query(sql, function (err, results) {
+        if(err) { throw err; }
 
-      console.log("Profile Insert OK");
-      //We setup the query to insert the user's info into users
+        console.log("Profile Insert OK");
+        //We setup the query to insert the user's info into users
 
-      var sqlSelectIDPro = `SELECT ID_Profil FROM profil WHERE login LIKE ?`;
-      var insertIDPro = [req.body.email];
-      sqlSelectIDPro = mysql.format(sqlSelectIDPro, insertIDPro);
+        var sqlSelectIDPro = `SELECT ID_Profil FROM profil WHERE login LIKE ?`;
+        var insertIDPro = [req.body.email];
+        sqlSelectIDPro = mysql.format(sqlSelectIDPro, insertIDPro);
 
-      db.query(sqlSelectIDPro, function (err, resultsIDPro) {
+        db.query(sqlSelectIDPro, function (err, resultsIDPro) {
 
-        var sql = `INSERT INTO users SET ?`;
-        var inserts = {nom: req.body.nom, prenom: req.body.prenom, email: req.body.email,
-                       password: req.body.pswrd, ID_profil: resultsIDPro[0].ID_Profil};
-        sql = mysql.format(sql, inserts);
+          var sql = `INSERT INTO users SET ?`;
+          var inserts = {nom: req.body.nom, prenom: req.body.prenom, email: req.body.email,
+                         password: hash, ID_profil: resultsIDPro[0].ID_Profil};
+          sql = mysql.format(sql, inserts);
 
-        // We execute the query
-        db.query(sql, function (err, results) {
-          if(err) { throw err; }
-          // On fait notre query
-            console.log("Select Query");
-            db.query("SELECT * FROM `users`", function (err, results) {
-              if (err) { throw err; }
-              console.log(results);
-          });// Select Querry
-        });// Insert Into Users Querry
-      });// Select ID_Profil Querry
-    });// Insert Profil
+          // We execute the query
+          db.query(sql, function (err, results) {
+            if(err) { throw err; }
+            // On fait notre query
+              console.log("Select Query");
+              db.query("SELECT * FROM `users`", function (err, results) {
+                if (err) { throw err; }
+                console.log(results);
+            });// Select Querry
+          });// Insert Into Users Querry
+        });// Select ID_Profil Querry
+      });// Insert Profil
+    });// Hash Password
 
     db.release();
   }); // pool closed
