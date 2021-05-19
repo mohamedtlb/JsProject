@@ -3,10 +3,15 @@
   https://www.youtube.com/watch?v=w-7RQ46RgxU&list=PL4cUxeGkcC9gcy9lrvMJ75z9maRw4byYp&index=1
 */
 
+const session = require('express-session');
 var express = require('express');
-var mysql = require('mysql');
+var mysql = require('mysql2/promise');
+const bcrypt = require('bcrypt')
 
 var app = express();
+
+// include of session
+app.use(session({secret: 'ssshhhhh', saveUninitialized:true, resave: false}));
 
 //static for the static files like *.css
 app.use(express.static('./public'));
@@ -47,54 +52,91 @@ app.get('/createQuestion', function(req, res){
 
 app.get('/login', function(req, res){
   res.sendFile(__dirname + '/login.html');
+  sess=req.session;
+  sess.email; // equivalent to $_SESSION['email'] if you don't understand in PHP.
+  sess.pswr;
+});
+
+app.get('/index', function(req, res) {
+  console.log("In index");
+  res.sendFile(__dirname + '/index.html');
 });
 
 //When we get a POST request we just display stuff in the console
-app.post('/login', function(req, res){
+app.post('/login', async function(req, PostRes, next){
 
   console.log("In login");
+  var redirectBool = false;
+  var redirectPath;
 
   //We acquire a connection from the pool
-  pool.getConnection(function(err, db) {
-  if (err) throw err; // not connected!
+  db = await pool.getConnection(); {
+  if (db.err) throw err; // not connected!
 
 
     // !!! They are ` and not ' !!! (alt gr + 7)
     //We setup the query to insert the user's credentials into profil
-    var sql = `SELECT login FROM profil WHERE login LIKE ? AND password LIKE ?`;
-    var inserts = [req.body.email, req.body.pswrd];
+    var sql = `SELECT password FROM profil WHERE login LIKE ?`;
+    var inserts = [req.body.email];
     sql = mysql.format(sql, inserts);
 
     //We execute the query
-    db.query(sql, function (err, results) {
-      if(err) { throw err; }
+    results = await db.query(sql)
+      if(results.err) { throw err; }
 
-      if(results.length == 0)
+      if(results[0].length == 0)
       {
         // Print que le compte n'existe pas sur la page html
         console.log("No account could be found");
+        req.session.destroy();
+        PostRes.redirect("/login.html");
       }
-      else if(results.length == 1)
+      else if(results[0].length == 1)
       {
-        // Attribution des variables de sessions
-        console.log("Account found");
+        console.log("Getting result back");
+        console.log("Res[0]: " + results[0].length);
+        console.log("Psw[0][0]: " + results[0][0].length);
+        var hash = results[0][0].password;
+        console.log("hash is " + hash);
+        resComp = await bcrypt.compare(req.body.pswrd, hash);
+        if(resComp)
+        {
+          // Attribution des variables de sessions
+          console.log("Account found");
+          sess.email = req.body.email;
+          console.log(sess.email);
+          redirectBool = true;
+          redirectPath = "/index";
+        }
+        else {
+          console.log(resComp);
+          console.log("Wrong password");
+        }
       }
       else {
         console.log("More than one account with the same credentials ?");
         console.log(results.length);
         console.log(results);
       }
-    });
 
 
     db.release();
-  }); // pool closed
+  } // pool closed
 
+  console.log(redirectBool);
+  if(redirectBool)
+  {
+    console.log("In redirect: " + redirectPath);
+    PostRes.send({code: 1, path: redirectPath});
+  }
+  else {
+    PostRes.send({code: -1});
+  }
   //Temporary
-  res.end('Boop');
+  PostRes.end('Boop');
 });
 
-app.post('/createQuestion', function(req, res){
+app.post('/createQuestion', async function(req, res){
 
   console.log("In createQuestion");
   //On regarde si l'UE est déjà dans la liste des UE qui existe, si non on la créer.
@@ -103,29 +145,35 @@ app.post('/createQuestion', function(req, res){
   sqlVerifUE = mysql.format(sqlVerifUE, insertsVerifUE);
 
   //We acquire a connection from the pool
-  pool.getConnection(function(err, db) {
-  if (err) throw err; // not connected!
+  console.log("Getting Connection");
+  db = await pool.getConnection(); {
+  if (db.err) {
+    console.log("error");
+    console.log(db.err);
+    throw db.err;
+  } // not connected!
 
     //Execute la querry Select
-    db.query(sqlVerifUE, function (err, resultsVerifUE) {
-      if(err) { throw err; }
-      console.log("Number of affected rows: " + resultsVerifUE.length);
+    console.log("Verif si UE existe");
+    resultsVerifUE = await db.query(sqlVerifUE); {
+      if(resultsVerifUE.err) { throw resultsVerifUE.err; }
+      console.log("Number of affected rows: " + resultsVerifUE[0].length);
 
       var okToLaunchInsertQuestion = false;
 
-      if(resultsVerifUE.length >= 2)
+      if(resultsVerifUE[0].length >= 2)
       {
         console.log("On a 2 fois le même UE dans la table, contactez le DB Admin");
         console.log(resultsVerifUE);
         res.end('ERROR');
       }
 
-      if(resultsVerifUE.length == 1)
+      if(resultsVerifUE[0].length == 1)
       {
         okToLaunchInsertQuestion = true;
       }
 
-      if(resultsVerifUE.length == 0)
+      if(resultsVerifUE[0].length == 0)
       {
         //On créer une nouvelle categorie
         console.log("On va créer une nouvelle UE !");
@@ -139,10 +187,10 @@ app.post('/createQuestion', function(req, res){
         var insertNewUE = {libelle: req.body.ue};
         sqlNewUE = mysql.format(sqlNewUE, insertNewUE);
 
-        db.query(sqlNewUE, function (err, resultsNewUE) {
-          if(err) { throw err; }
+        resultsNewUE = await db.query(sqlNewUE); {
+          if(resultsNewUE.err) { throw resultsNewUE.err; }
           console.log("New UE added !");
-        });
+        }
       }
 
       console.log("Is it ok ? <" + okToLaunchInsertQuestion + ">");
@@ -153,25 +201,25 @@ app.post('/createQuestion', function(req, res){
         var sqlSelectLibelle = `SELECT ID_categorie FROM categorie WHERE libelle = ?`;
         sqlSelectLibelle = mysql.format(sqlSelectLibelle,  [req.body.ue]);
 
-        db.query(sqlSelectLibelle, function (err, resultsLibelle)
-        {
+        resultsLibelle = await db.query(sqlSelectLibelle); {
+
           var sql = `INSERT INTO questionnaire SET ?`;
           var inserts =  {question: req.body.question, reponse: req.body.proposition1,
                           fausseReponse1: req.body.proposition2, fausseReponse2: req.body.proposition3,
                           fausseReponse3: req.body.proposition4, difficulty: req.body.difficultee,
-                          ID_categorie: resultsLibelle[0].ID_categorie};
+                          ID_categorie: resultsLibelle[0][0].ID_categorie};
           sql = mysql.format(sql, inserts);
 
-          db.query(sql, function (err, results) {
-            if(err) { throw err; }
-            console.log(results);
-          });// Insert Into Questionnaire
-        });// Select Libelle
+          results = await db.query(sql); {
+            if(results.err) { throw results.err; }
+            console.log("Affected Rows: " + results[0].affectedRows);
+          }// Insert Into Questionnaire
+        }// Select Libelle
       }// If it's ok to insert la question
-    });// Verif UE
+    }// Verif UE
 
     db.release;
-  }); //Pool closed
+  } //Pool closed
 
   //Temporary
   res.end('Boop');
@@ -183,55 +231,62 @@ app.get('/signUpBeta', function(req, res){
 });
 
 //When we get a POST request we just display stuff in the console
-app.post('/signUpBeta', function(req, res){
+app.post('/signUpBeta', async function(req, res){
 
   console.log("In signUpBeta");
 
   //We acquire a connection from the pool
-  pool.getConnection(function(err, db) {
-  if (err) throw err; // not connected!
+  db = await pool.getConnection(); {
+  if (db.err) throw dr.err; // not connected!
 
+    // We prepare the password by generating salt and hashing it
+    const saltRounds = 10;
 
-    // !!! They are ` and not ' !!! (alt gr + 7)
-    //We setup the query to insert the user's credentials into profil
-    var sql = `INSERT INTO profil SET ?`;
-    var inserts = {login: req.body.email, password: req.body.pswrd}
-    sql = mysql.format(sql, inserts);
-    console.log(sql);
+    hash = await bcrypt.hash(req.body.pswrd, saltRounds); {
+      if(hash.err) {throw hash.err;}
+      console.log("Hash: " + hash);
 
-    //We execute the query
-    db.query(sql, function (err, results) {
-      if(err) { throw err; }
+      // !!! They are ` and not ' !!! (alt gr + 7)
+      //We setup the query to insert the user's credentials into profil
+      var sql = `INSERT INTO profil SET ?`;
+      var inserts = {login: req.body.email, password: hash}
+      sql = mysql.format(sql, inserts);
+      console.log(sql);
 
-      console.log("Profile Insert OK");
-      //We setup the query to insert the user's info into users
+      //We execute the query
+      results = await db.query(sql); {
+        if(results.err) { throw results.err; }
 
-      var sqlSelectIDPro = `SELECT ID_Profil FROM profil WHERE login LIKE ?`;
-      var insertIDPro = [req.body.email];
-      sqlSelectIDPro = mysql.format(sqlSelectIDPro, insertIDPro);
+        console.log("Profile Insert OK");
+        //We setup the query to insert the user's info into users
 
-      db.query(sqlSelectIDPro, function (err, resultsIDPro) {
+        var sqlSelectIDPro = `SELECT ID_Profil FROM profil WHERE login LIKE ?`;
+        var insertIDPro = [req.body.email];
+        sqlSelectIDPro = mysql.format(sqlSelectIDPro, insertIDPro);
 
-        var sql = `INSERT INTO users SET ?`;
-        var inserts = {nom: req.body.nom, prenom: req.body.prenom, email: req.body.email,
-                       password: req.body.pswrd, ID_profil: resultsIDPro[0].ID_Profil};
-        sql = mysql.format(sql, inserts);
+        resultsIDPro = await db.query(sqlSelectIDPro); {
 
-        // We execute the query
-        db.query(sql, function (err, results) {
-          if(err) { throw err; }
-          // On fait notre query
-            console.log("Select Query");
-            db.query("SELECT * FROM `users`", function (err, results) {
-              if (err) { throw err; }
-              console.log(results);
-          });// Select Querry
-        });// Insert Into Users Querry
-      });// Select ID_Profil Querry
-    });// Insert Profil
+          var sql = `INSERT INTO users SET ?`;
+          var inserts = {nom: req.body.nom, prenom: req.body.prenom, email: req.body.email,
+                         password: hash, ID_profil: resultsIDPro[0][0].ID_Profil};
+          sql = mysql.format(sql, inserts);
+
+          // We execute the query
+          results = await db.query(sql); {
+            if(results.err) { throw results.err; }
+            // On fait notre query
+              console.log("Select Query");
+              resTMP = db.query("SELECT * FROM `users`"); {
+                if (resTMP.err) { throw resTMP.err; }
+                console.log(resTMP);
+            }// Select Querry
+          }// Insert Into Users Querry
+        }// Select ID_Profil Querry
+      }// Insert Profil
+    }// Hash Password
 
     db.release();
-  }); // pool closed
+  } // pool closed
 
   //Temporary
   res.end('Boop');

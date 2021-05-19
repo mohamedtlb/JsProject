@@ -24,8 +24,25 @@ console.log(formData);
       data: formData, //What we're sending in the post
       success: function(data){
       console.log('We do be successful');
+      console.log(data);
 
-      location.reload();
+      if(data.code == 1)
+      {
+        $.ajax({
+          type: 'GET', //We're sending a POST signal
+          url: data.path, //The route we're going to
+          success: function(response){
+            console.log('We do be successful');
+            window.location.replace(data.path);
+            //location.reload();
+          }
+        });
+      }
+      else {
+        console.log("We fucked up");
+      }
+      //location.reload();
+      //window.location.replace('/index');
       }
     });
     return false;
