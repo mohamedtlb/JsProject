@@ -237,6 +237,7 @@ textarea#Enonce.formStyle.form-control.EnonceForm
   .navbar:
   {
     margin: auto;
+    flex-grow: 1;
   }
 }
 
@@ -246,6 +247,12 @@ textarea#Enonce.formStyle.form-control.EnonceForm
 .navbar-brand, .navbar-brand:hover, .navbar-brand:active {
     text-align: center;
     color: var(--navbar-color);
+}
+
+.navButton
+{
+  flex-basis: 20%;
+  flex-shrink: 3;
 }
 
 .btn-primary {

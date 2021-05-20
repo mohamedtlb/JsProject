@@ -177,6 +177,12 @@ h1, h2 {
     color: var(--navbar-color);
 }
 
+.navButton
+{
+  flex-basis: 20%;
+  flex-shrink: 3;
+}
+
 .scoreBG {
   background-color: var(--mainBG-color);
   text-align: center;

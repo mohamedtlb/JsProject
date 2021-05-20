@@ -6,9 +6,12 @@
 //When the document is fully loaded
 $(document).ready(function(){
 
-  var links = document.getElementById('Liens');
+  var login = document.getElementById('LinkLogin');
+  var signUp = document.getElementById('LinkSignUp');
+  var insertQuestion = document.getElementById('LinkInsertQuestion');
+  var index = document.getElementById('LinkIndex');
 
-  links.onclick = function() {
+  login.onclick = function() {
     console.log("You just clicked, didn't you ?");
 
   //The ajax request
@@ -23,34 +26,53 @@ $(document).ready(function(){
      });
      return false;
    }
- });
 
-//   //When a form is sent
-//   $('form').on('submit', function(){
-//
-//     //That's the signUp data
-//     var formData = {
-//        nom: $('#nom').val(),
-//        prenom: $('#prenom').val(),
-//        email: $('#mail').val(),
-//        pswrd: $('#pswrd').val(),
-//
-//      };
-// //Debugging
-// console.log(formData);
-//
+   signUp.onclick = function() {
+     console.log("You just clicked, didn't you ?");
+
+   //The ajax request
+      $.ajax({
+        type: 'GET', //We're sending a POST signal
+        url: '/signUpBeta', //The route we're going to
+        success: function(response){
+          console.log('We do be successful');
+          window.location.replace('/signUpBeta');
+          //location.reload();
+        }
+      });
+      return false;
+    }
+
+    insertQuestion.onclick = function() {
+      console.log("You just clicked, didn't you ?");
+
     //The ajax request
-    // $.ajax({
-    //   type: 'POST', //We're sending a POST signal
-    //   url: '/signUpBeta', //The route we're going to
-    //   data: formData, //What we're sending in the post
-    //   success: function(data){
-    //   console.log('We do be successful');
-    //
-    //   location.reload();
-    //   }
-    // });
-  //   return false;
-  // });
+       $.ajax({
+         type: 'GET', //We're sending a POST signal
+         url: '/createQuestion', //The route we're going to
+         success: function(response){
+           console.log('We do be successful');
+           window.location.replace('/createQuestion');
+           //location.reload();
+         }
+       });
+       return false;
+     }
 
-//});
+     index.onclick = function() {
+       console.log("You just clicked, didn't you ?");
+
+     //The ajax request
+        $.ajax({
+          type: 'GET', //We're sending a POST signal
+          url: '/index', //The route we're going to
+          success: function(response){
+            console.log('We do be successful');
+            window.location.replace('/index');
+            //location.reload();
+          }
+        });
+        return false;
+      }
+
+ });

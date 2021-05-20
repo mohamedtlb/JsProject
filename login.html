@@ -14,6 +14,7 @@
            We'll need to move them to be 'unobtrusive JS' complient-->
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script src="/assets/ajaxLogin.js"></script>
+      <script src="/assets/ajaxNavGet.js" defer></script>
 
       <title>Quiz Educatif!</title>
   </head>
@@ -24,14 +25,18 @@
     </header>
 
     <nav class="menu box navbar nav-light">
-        <a class="navbar-brand" href="./scores.html">
-          <button class="reponse box btn btn-primary btn-sm btnOption">
-            Meilleur score
-          </button>
-        </a>
-        <button class="reponse box btn btn-primary btn-sm btnOption">
-          d'autres lien, login etc
-        </button>
+      <button class="reponse box navButton btn btn-primary btn-sm btnOption" id="LinkIndex">
+        Index: Quiz !
+      </button>
+      <button class="reponse box navButton btn btn-primary btn-sm btnOption" id="LinkInsertQuestion">
+        Insérez vos questions !
+      </button>
+      <button class="reponse box navButton btn btn-primary btn-sm btnOption" id="LinkSignUp">
+        sign Up
+      </button>
+      <button class="reponse box navButton btn btn-primary btn-sm btnOption" id="LinkLogin">
+        Login
+      </button>
     </nav>
 
       <form class="main" id="loginCredentials">

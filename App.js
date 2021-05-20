@@ -313,8 +313,17 @@ app.post('/scoreStorage', async function(req, res) {
   //We acquire a connection from the pool
   db = await pool.getConnection();
   if (db.err) throw dr.err; // not connected!
+  console.log("sess: " + typeof sess);
 
+  var toAnon = false;
   if(typeof sess == 'undefined')
+  {
+
+  } else if(typeof sess.email == 'undefined') {
+    toAnon = true;
+  }
+
+  if(toAnon)
   {
     console.log("Pas de session en cours, anon gets the credits !");
     // Récupère l'ID de l'anonyme dans la DB

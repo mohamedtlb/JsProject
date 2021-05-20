@@ -8,6 +8,7 @@
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/assets/style.css">
+    <script src="/assets/ajaxNavGet.js" defer></script>
     <!-- The scripts necessary for the JQuery/Ajax treatment
          We'll need to move them to be 'unobtrusive JS' complient-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -20,19 +21,21 @@
   </header>
 
   <nav class="menu box navbar nav-light">
-      <a class="navbar-brand" href="./scores.html">
-        <button class="reponse box btn btn-primary btn-sm btnOption">
-          Meilleur score
-        </button>
-      </a>
-      <button class="reponse box btn btn-primary btn-sm btnOption">
-        d'autres lien, login etc
-      </button>
-      <button class="reponse box btn btn-primary btn-sm btnOption">
-        <span class="navbar-text">
-          Time: 0
-        </span>
-      </button>
+    <button class="reponse navButton btn btn-primary btn-sm btnOption" id="LinkIndex">
+      Index: Quiz !
+    </button>
+    <button class="reponse navButton btn btn-primary btn-sm btnOption" id="LinkInsertQuestion">
+      Insérez vos questions !
+    </button>
+    <button class="reponse navButton btn btn-primary btn-sm btnOption" id="LinkSignUp">
+      sign Up
+    </button>
+    <button class="reponse navButton btn btn-primary btn-sm btnOption" id="LinkLogin">
+      Login
+    </button>
+    <button class="reponse btn btn-primary btn-sm btnOption navbar-text">
+        Time: 0
+    </button>
   </nav>
 
   <div class="question box" id="titleScreen">
