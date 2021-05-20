@@ -14,10 +14,12 @@ var questionNum = 0;
 var scoresArray;
 playerInitials.value = '';
 
+//On récupère ici les questions et les réponses !
 var DBQuestions = JSON.parse(document.querySelector('#variableJSON').textContent);
 document.querySelector('#variableJSON').remove();
-console.log(DBQuestions);
-console.log(DBQuestions[0].question);
+
+// console.log(DBQuestions);
+ console.log(DBQuestions[0].question);
 
 // If a local high scores array exists, import it, otherwise initialize the array
 if (localStorage.getItem("localHighScores")) {
@@ -54,9 +56,14 @@ function startQuiz() {
     }, 1000);
 }
 
+function random_sort()
+{
+  return Math.random() - 0.5;
+}
+
 // changeQuestion operates only when the element clicked is a button
 function changeQuestion() {
-    var questionInfo = questions[questionNum];
+    var questionInfo = DBQuestions[questionNum];
 
     // ...If there are no questions left, stop the timer and end the function...
     if (questionInfo == undefined) {
@@ -67,12 +74,27 @@ function changeQuestion() {
 
     // ...Otherwise write the information into the next question...
     setTimeout(function () {
-        for (var i = 0; i < optionButtons.length; i++) {
-            optionButtons[i].textContent = i + 1 + '. ' + questionInfo.choices[i];
-            optionButtons[i].value = questionInfo.choices[i];
+
+
+        // Nombre de réponses qu'on a à placer
+        const aswAmount = optionButtons.length;
+
+       // Array qui contient nos réponses
+        var Rset = [];
+        Rset.push(questionInfo.reponse);
+        Rset.push(questionInfo.fausseReponse1);
+        Rset.push(questionInfo.fausseReponse2);
+        Rset.push(questionInfo.fausseReponse3);
+
+        console.log("leg: " + Rset.length);
+        Rset.sort(random_sort);
+
+        for (var i = 0; i < aswAmount; i++) {
+          optionButtons[i].textContent = i + 1 + '. ' + Rset[i];
+          optionButtons[i].value = Rset[i];
         }
-        document.querySelector("#questionPrompt").textContent = questionInfo.title;
-        document.querySelector("#Prompt").textContent = questionInfo.enonce;
+        document.querySelector("#questionPrompt").textContent =  "Difficultée" + questionInfo.difficulty;
+        document.querySelector("#Prompt").textContent = questionInfo.question;
 
         // ...And show the question
         questionDiv.className = "questionFadeIn question box";
@@ -86,11 +108,13 @@ function checkAnswer() {
     if (event.target.nodeName == "BUTTON") {
         var playerAnswer = event.target.value;
         if (playerAnswer) {
-            if (playerAnswer === questions[questionNum].answer) {
+            if (playerAnswer === DBQuestions[questionNum].reponse) {
                 answerText = "Correct!";
+                console.log("Oui !");
                 // If there is not enough time left over, set time to 0
             } else {
                 answerText = "Wrong!";
+                console.log("Non !");
                 time -= 15;
                 if (time <= 0) {
                     time = 0;
