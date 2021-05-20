@@ -244,6 +244,48 @@ app.get('/signUpBeta', function(req, res){
   res.sendFile(__dirname + '/signUp.html');
 });
 
+app.get('/score', async function(req, res) {
+
+  console.log("In Score Display");
+
+  db = await pool.getConnection(); {
+    if (db.err) throw dr.err; // not connected!
+  
+    var toAnon = false;
+    if(typeof sess == 'undefined')
+    {
+      toAnon = true;
+    } else if(typeof sess.email == 'undefined') {
+      toAnon = true;
+    }
+
+    //Rajouter des Orders mais j'suis crevé
+    if(toAnon)
+    {
+      var sqlScores = `SELECT * FROM quiz WHERE ID_users = ?`;
+    } else {
+      var sqlUserID = `SELECT ID_users FROM users WHERE email LIKE ?`;
+      var insert = [sess.email];
+      sqlUserID = mysql.format(sqlUserID, insert);
+
+      resUser = await db.query(sqlUserID);
+      var IDUser = resUser[0][0].ID_users;
+
+      var sqlScores = `SELECT * FROM quiz WHERE ID_users = ?`;
+      var insert = [IDUser];
+      sqlScores = mysql.format(sqlScores, insert);
+
+      if(sqlScores[0].length == 0)
+      {
+        console.log("No Scores for this Account");
+      } else {
+        // Faut que je fasse la vue
+        res.render('scores', sqlScores[0]);
+      }
+    }
+  }
+});
+
 //When we get a POST request we just display stuff in the console
 app.post('/signUpBeta', async function(req, res){
 
@@ -251,7 +293,7 @@ app.post('/signUpBeta', async function(req, res){
 
   //We acquire a connection from the pool
   db = await pool.getConnection(); {
-  if (db.err) throw dr.err; // not connected!
+    if (db.err) throw dr.err; // not connected!
 
     // We prepare the password by generating salt and hashing it
     const saltRounds = 10;
