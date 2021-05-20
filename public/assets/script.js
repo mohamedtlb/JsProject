@@ -1,6 +1,6 @@
 // Initialize globals
 var answerText = "";
-var time = 15 * questions.length;
+var time = 60 * questions.length;
 var timeLimit;
 var questionDiv = document.querySelector("#questionBlock");
 var reponseDiv = document.querySelector("#reponseBlock");
