@@ -99,3 +99,41 @@ https://www.w3schools.com/tags/att_textarea_form.asp
 
 Comment trouver la feuille CSS qui a le dernier mot en terme d'Override/Specificity
 https://developer.chrome.com/docs/devtools/css/overrides/
+
+---------------------------------------------------------------------------------------------------------
+
+Si Fibonacci_Sequence(x) = 2, que vaut x ?
+x = 4, comme la semaine actuelle !
+
+Doc de Crypto (pour les recherches)
+https://nodejs.org/api/crypto.html
+
+Doc de MySQL2 (pour les recherches)
+https://github.com/sidorares/node-mysql2/blob/master/README.md#history-and-why-mysql2
+
+flex-shrink et flex-grow pour les bouton de la navBar (et d'autres choses sur flexbox)
+https://css-tricks.com/snippets/css/a-guide-to-flexbox/#flexbox-tricks
+
+Vérifier si une variable est définie et si un attribut est défini
+https://masteringjs.io/tutorials/fundamentals/undefined-check
+
+Obtenir une distribution aléatoire des réponses avec sort()
+https://www.kodyaz.com/articles/sort-array-in-random-order-using-javascript-shuffle-function.aspx
+
+Passer un objet du serveur vers ejs puis d'ejs vers un JS-local
+https://stackoverflow.com/questions/46539106/accessing-passed-ejs-variable-in-javascript-file (voir la réponse de TheRedstoneTaco)
+
+Récupérer 10 questions aléatoire depuis la DB
+https://stackoverflow.com/questions/4329396/mysql-select-10-random-rows-from-600k-rows-fast (voir la réponse d'Ali)
+
+Rapide tutoriel ejs
+https://www.digitalocean.com/community/tutorials/how-to-use-ejs-to-template-your-node-application
+
+Descritpion et tutoriel Bcrypt
+https://www.npmjs.com/package/bcrypt
+
+Autre tutoriel Bcrypt
+https://heynode.com/blog/2020-04/salt-and-hash-passwords-bcrypt
+
+Async/Await en JS avec de beau exemple
+https://blog.risingstack.com/mastering-async-await-in-nodejs/
