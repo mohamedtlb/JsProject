@@ -206,6 +206,7 @@ function submitAndSaveScore(event) {
        success: function(data){
        console.log('We do be successful');
        console.log(data);
+       location.reload();
        }
      });
      return false;

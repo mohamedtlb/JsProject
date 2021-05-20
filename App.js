@@ -323,6 +323,8 @@ app.post('/scoreStorage', async function(req, res) {
     toAnon = true;
   }
 
+  // J'aurais pu faire tellement plus simple à juste changer ce qu'on met dans insert
+  // Mais non il a fallu que je duplique du code et que je me plaigne
   if(toAnon)
   {
     console.log("Pas de session en cours, anon gets the credits !");
@@ -337,6 +339,24 @@ app.post('/scoreStorage', async function(req, res) {
 
     var sqlScore = `INSERT INTO quiz SET ?`;
     var inserts = {score: req.body.score, note: req.body.note, ID_users: IDAnon,
+                   ID_question: req.body.ID_Quest};
+    sqlScore = mysql.format(sqlScore, inserts);
+
+    results = await db.query(sqlScore);
+    console.log("Rows affected: " + results[0].affectedRows);
+  }
+  else
+  {
+    var sqlUserID = `SELECT ID_users FROM users WHERE email LIKE ?`;
+    var insert = [sess.email];
+    sqlUserID = mysql.format(sqlUserID, insert);
+
+    resUser = await db.query(sqlUserID);
+    var IDUser = resUser[0][0].ID_users;
+    console.log("IDUser: " + IDUser);
+
+    var sqlScore = `INSERT INTO quiz SET ?`;
+    var inserts = {score: req.body.score, note: req.body.note, ID_users: IDUser,
                    ID_question: req.body.ID_Quest};
     sqlScore = mysql.format(sqlScore, inserts);
 
