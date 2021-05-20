@@ -1,6 +1,5 @@
 // Initialize globals
 var answerText = "";
-var time = 60 * questions.length;
 var timeLimit;
 var questionDiv = document.querySelector("#questionBlock");
 var reponseDiv = document.querySelector("#reponseBlock");
@@ -18,6 +17,7 @@ var note = 0;
 //On récupère ici les questions et les réponses !
 var DBQuestions = JSON.parse(document.querySelector('#variableJSON').textContent);
 document.querySelector('#variableJSON').remove();
+var time = 60 * DBQuestions.length;
 
 // console.log(DBQuestions);
  console.log(DBQuestions[0].question);
