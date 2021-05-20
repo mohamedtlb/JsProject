@@ -10,6 +10,8 @@ const bcrypt = require('bcrypt')
 
 var app = express();
 
+app.set('view engine', 'ejs');
+
 // include of session
 app.use(session({secret: 'ssshhhhh', saveUninitialized:true, resave: false}));
 
@@ -57,9 +59,21 @@ app.get('/login', function(req, res){
   sess.pswr;
 });
 
-app.get('/index', function(req, res) {
+app.get('/index', async function(req, res) {
   console.log("In index");
-  res.sendFile(__dirname + '/index.html');
+  db = await pool.getConnection(); {
+    var sql = `SELECT * FROM questionnaire AS t1 JOIN (SELECT ID_Questionnaire FROM questionnaire ORDER BY RAND() LIMIT 10) as t2 ON t1.ID_Questionnaire=t2.ID_Questionnaire`;
+    sql = mysql.format(sql);
+    results = await db.query(sql);
+
+
+  }
+  //res.sendFile(__dirname + '/index.html');
+  console.log(results[0]);
+  //res.send(results[0]);
+  res.render('index', {results: results[0]});
+
+  // SELECT * FROM tbl AS t1 JOIN (SELECT id FROM tbl ORDER BY RAND() LIMIT 10) as t2 ON t1.id=t2.id
 });
 
 //When we get a POST request we just display stuff in the console
@@ -81,7 +95,7 @@ app.post('/login', async function(req, PostRes, next){
     sql = mysql.format(sql, inserts);
 
     //We execute the query
-    results = await db.query(sql)
+    results = await db.query(sql);
       if(results.err) { throw err; }
 
       if(results[0].length == 0)

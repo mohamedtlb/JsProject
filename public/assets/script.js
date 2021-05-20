@@ -6,13 +6,18 @@ var questionDiv = document.querySelector("#questionBlock");
 var reponseDiv = document.querySelector("#reponseBlock");
 var alertBoxDiv = document.querySelector("#alertBox");
 var answerDiv = document.querySelector("#answerResult");
-var endGameDiv = document.querySelector("#endGameBlock");
+var endGameDiv = ("#endGameBlock");
 var optionButtons = [document.querySelector("#quizOption1"), document.querySelector("#quizOption2"),
 document.querySelector("#quizOption3"), document.querySelector("#quizOption4")]
 var playerInitials = document.querySelector("#playerInitials");
 var questionNum = 0;
 var scoresArray;
 playerInitials.value = '';
+
+var DBQuestions = JSON.parse(document.querySelector('#variableJSON').textContent);
+document.querySelector('#variableJSON').remove();
+console.log(DBQuestions);
+console.log(DBQuestions[0].question);
 
 // If a local high scores array exists, import it, otherwise initialize the array
 if (localStorage.getItem("localHighScores")) {

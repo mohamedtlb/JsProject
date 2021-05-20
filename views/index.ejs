@@ -38,6 +38,9 @@
           Vous êtes étudians sur la faculte de versailles les examens approches et vous ne savez d"ou commencez le challenge
           educatif vous facilite la vie
       </p>
+      <p>
+      <%= results[0].question %>
+      </p>
       <button class="btn btn-primary" id="quizStart">Commencez!</button>
   </div>
 
@@ -79,6 +82,13 @@
   <footer class="footer box">
     <marquee>Copyright edition Cherif</marquee>
   </footer>
+
+  <!-- On hack dur
+       On passe la variable que le serveur renvoie
+       qui contient les questions vers le script du quizz-->
+  <span id='variableJSON' hidden>
+      <%= JSON.stringify(results); %>
+  </span>
 
   <script src="/assets/questions.js"></script>
   <script src="/assets/script.js"></script>
