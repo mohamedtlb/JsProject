@@ -6,13 +6,14 @@ var questionDiv = document.querySelector("#questionBlock");
 var reponseDiv = document.querySelector("#reponseBlock");
 var alertBoxDiv = document.querySelector("#alertBox");
 var answerDiv = document.querySelector("#answerResult");
-var endGameDiv = ("#endGameBlock");
+var endGameDiv = document.querySelector("#endGameBlock");
 var optionButtons = [document.querySelector("#quizOption1"), document.querySelector("#quizOption2"),
 document.querySelector("#quizOption3"), document.querySelector("#quizOption4")]
 var playerInitials = document.querySelector("#playerInitials");
 var questionNum = 0;
 var scoresArray;
 playerInitials.value = '';
+var note = 0;
 
 //On récupère ici les questions et les réponses !
 var DBQuestions = JSON.parse(document.querySelector('#variableJSON').textContent);
@@ -111,6 +112,7 @@ function checkAnswer() {
             if (playerAnswer === DBQuestions[questionNum].reponse) {
                 answerText = "Correct!";
                 console.log("Oui !");
+                note = note + 2;
                 // If there is not enough time left over, set time to 0
             } else {
                 answerText = "Wrong!";
@@ -144,6 +146,7 @@ function checkAnswer() {
 }
 
 function showEndGame() {
+  console.log("Game ended");
     // Rewrites remaining time if the final question was wrong
     document.querySelector(".navbar-text").textContent = "Time: " + time;
 
@@ -165,31 +168,47 @@ function showEndGame() {
         answerDiv.style = "display: none;";
         endGameDiv.style = "display: grid;";
         endGameDiv.className = "slideDown question box";
-
     }, 700)
 }
 
 function submitAndSaveScore(event) {
-    event.preventDefault();
-    if (playerInitials.value.trim() == '') {
-        if (alertBoxDiv.style != "display:grid;") {
-            alertBoxDiv.style = "display:grid;";
+    // event.preventDefault();
+    // if (playerInitials.value.trim() == '') {
+    //     if (alertBoxDiv.style != "display:grid;") {
+    //         alertBoxDiv.style = "display:grid;";
+    //
+    //         setTimeout(function () {
+    //             alertBoxDiv.style = "display: none;";
+    //         }, 1000);
+    //     }
+    //     return;
+    // } else {
+    //     var newHighScore = {
+    //         initials: playerInitials.value.toUpperCase().trim(),
+    //         score: time
+    //     };
+    //     scoresArray.push(newHighScore);
+    //     scoresArray.sort(function (a, b) { return b.score - a.score });
+    //     localStorage.setItem("localHighScores", JSON.stringify(scoresArray));
+    //     window.location.href = "./scores.html"
+    // }
 
-            setTimeout(function () {
-                alertBoxDiv.style = "display: none;";
-            }, 1000);
-        }
-        return;
-    } else {
-        var newHighScore = {
-            initials: playerInitials.value.toUpperCase().trim(),
-            score: time
-        };
-        scoresArray.push(newHighScore);
-        scoresArray.sort(function (a, b) { return b.score - a.score });
-        localStorage.setItem("localHighScores", JSON.stringify(scoresArray));
-        window.location.href = "./scores.html"
-    }
+    var formData = {
+      score: time,
+      note: note,
+      ID_Quest:DBQuestions[0].ID_Questionnaire,
+     };
+
+     $.ajax({
+       type: 'POST', //We're sending a POST signal
+       url: '/scoreStorage', //The route we're going to
+       data: formData, //What we're sending in the post
+       success: function(data){
+       console.log('We do be successful');
+       console.log(data);
+       }
+     });
+     return false;
 }
 
 // The only event listeners in the entire script

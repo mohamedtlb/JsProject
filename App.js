@@ -290,7 +290,7 @@ app.post('/signUpBeta', async function(req, res){
             if(results.err) { throw results.err; }
             // On fait notre query
               console.log("Select Query");
-              resTMP = db.query("SELECT * FROM `users`"); {
+              resTMP = await db.query("SELECT * FROM `users`"); {
                 if (resTMP.err) { throw resTMP.err; }
                 console.log(resTMP);
             }// Select Querry
@@ -303,5 +303,38 @@ app.post('/signUpBeta', async function(req, res){
   } // pool closed
 
   //Temporary
+  res.end('Boop');
+});
+
+app.post('/scoreStorage', async function(req, res) {
+
+  console.log("in score Storage");
+
+  //We acquire a connection from the pool
+  db = await pool.getConnection();
+  if (db.err) throw dr.err; // not connected!
+
+  if(typeof sess == 'undefined')
+  {
+    console.log("Pas de session en cours, anon gets the credits !");
+    // Récupère l'ID de l'anonyme dans la DB
+    var sqlAnon = `SELECT ID_users FROM users WHERE email LIKE ?`;
+    var insert = ['Anon@gmail.com'];
+    sqlAnon = mysql.format(sqlAnon, insert);
+
+    resAnon = await db.query(sqlAnon);
+    var IDAnon = resAnon[0][0].ID_users;
+    console.log("IDAnon: " + IDAnon);
+
+    var sqlScore = `INSERT INTO quiz SET ?`;
+    var inserts = {score: req.body.score, note: req.body.note, ID_users: IDAnon,
+                   ID_question: req.body.ID_Quest};
+    sqlScore = mysql.format(sqlScore, inserts);
+
+    results = await db.query(sqlScore);
+    console.log("Rows affected: " + results[0].affectedRows);
+  }
+
+  db.release();
   res.end('Boop');
 });
