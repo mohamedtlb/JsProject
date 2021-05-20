@@ -318,7 +318,7 @@ app.post('/scoreStorage', async function(req, res) {
   var toAnon = false;
   if(typeof sess == 'undefined')
   {
-
+    toAnon = true;
   } else if(typeof sess.email == 'undefined') {
     toAnon = true;
   }
