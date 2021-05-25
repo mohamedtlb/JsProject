@@ -16,7 +16,7 @@ app.set('view engine', 'ejs');
 app.use(session({secret: 'ssshhhhh', saveUninitialized:true, resave: false}));
 
 //static for the static files like *.css
-app.use(express.static('./public'));
+app.use(express.static('./public', {dotfiles: 'allow'}));
 
 //urlencoder will parse our POST data
 app.use(express.urlencoded({extended: true}));
@@ -57,6 +57,10 @@ app.get('/login', function(req, res){
   sess=req.session;
   sess.email; // equivalent to $_SESSION['email'] if you don't understand in PHP.
   sess.pswr;
+});
+
+app.get('/.well-known/acme-challenge/2LDSI0cHfyHD5GuH88LPhEEp2ZIDigcTedRveFtjUD8', async function(req, res) {
+  res.sendFile(__dirname + 'public/.well-known/acme-challenge/2LDSI0cHfyHD5GuH88LPhEEp2ZIDigcTedRveFtjUD8');
 });
 
 app.get('/index', async function(req, res) {
