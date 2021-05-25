@@ -250,7 +250,7 @@ app.get('/score', async function(req, res) {
 
   db = await pool.getConnection(); {
     if (db.err) throw dr.err; // not connected!
-  
+console.log("Co OK");
     var toAnon = false;
     if(typeof sess == 'undefined')
     {
@@ -258,29 +258,43 @@ app.get('/score', async function(req, res) {
     } else if(typeof sess.email == 'undefined') {
       toAnon = true;
     }
-
+console.log("Anonimity determined");
     //Rajouter des Orders mais j'suis crevé
     if(toAnon)
     {
-      var sqlScores = `SELECT * FROM quiz WHERE ID_users = ?`;
+      // Associe nom/prenom aux score, ordonne par les meilleurs score en premier et prend les  meilleurs
+      // SELECT * FROM heroku_ba0a838a03c77b3.quiz as q1 JOIN (SELECT nom, prenom, ID_users FROM heroku_ba0a838a03c77b3.users) as u1 ON q1.ID_Users = u1.ID_Users ORDER BY score desc LIMIT 10;
+      var sqlScores = `SELECT * FROM quiz as q1 JOIN (SELECT nom, prenom, ID_users FROM users) as u1 ON q1.ID_Users = u1.ID_Users ORDER BY score desc LIMIT 10`;
+
+      var resScores = await db.query(sqlScores);
+      console.log("Queried");
+      if(resScores[0].length == 0)
+      {
+        console.log("No Scores for this Account");
+      } else {
+        console.log("length more than 0");
+        res.render('leaderboard',  {scores: resScores[0]});
+      }
     } else {
       var sqlUserID = `SELECT ID_users FROM users WHERE email LIKE ?`;
       var insert = [sess.email];
       sqlUserID = mysql.format(sqlUserID, insert);
 
-      resUser = await db.query(sqlUserID);
+      var resUser = await db.query(sqlUserID);
       var IDUser = resUser[0][0].ID_users;
 
       var sqlScores = `SELECT * FROM quiz WHERE ID_users = ?`;
       var insert = [IDUser];
       sqlScores = mysql.format(sqlScores, insert);
 
-      if(sqlScores[0].length == 0)
+      var resScores = await db.query(sqlScores);
+
+      if(resScores[0].length == 0)
       {
         console.log("No Scores for this Account");
       } else {
         // Faut que je fasse la vue
-        res.render('scores', sqlScores[0]);
+        res.render('scores',  {scores: resScores[0]});
       }
     }
   }

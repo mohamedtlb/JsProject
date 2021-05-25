@@ -1,0 +1,169 @@
+/*
+  Paramètrage des coleurs, on les regroupe à un même endroit pour faciliter leur modification
+*/
+:root{
+  --button-color: #f59f05;
+  --mainBG-color: #2f3542;
+  --navbar-color: #f00;
+  --altBG-color:  #f59f05;
+  --score-color:  #f59f05;
+  --scoreAlt-color: #ffbf05;
+  --button-hover-color: #ffbf05;
+  --text-color: #fff;
+}
+
+/*Grid sutff*/
+* {
+  box-sizing: border-box;
+}
+
+.leaderboard{
+  min-height: 100vh; /*Use the whole page even if we don't have a lot of text*/
+  background-color: var(--mainBG-color);
+  color: var(--text-color);
+
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 8% 1fr 2fr 2fr auto 8%;
+  grid-gap: 20px;
+  grid-template-areas: "logo      menu     menu     menu     menu     menu "
+                       " .         .       leadB    leadB     .        .   "
+                       " .        main     main     main     main      .   "
+                       " .        main     main     main     main      .   "
+                       " .         .    scoreLink scoreLink   .        .   "
+                       "footer   footer   footer   footer   footer   footer";
+
+}
+
+.leadB
+{
+  grid-area: leadB;
+  font-size: 40px;
+  text-align: center;
+  margin-top: 5%;
+}
+
+.logo
+{
+  grid-area: logo;
+  text-align: center;
+  padding: 20px; /*Text centering, remove when we put the pic*/
+}
+
+.menu
+{
+  grid-area: menu;
+}
+
+.scoreLink
+{
+  grid-area: scoreLink;
+  text-align: center;
+}
+
+.footer
+{
+  grid-area: footer;
+  text-align: center;
+}
+
+.main
+{
+  grid-area: main;
+  text-align: center;
+  font-size: 20px;
+}
+
+.scoreAltColourStyle {
+    padding: 3px 3px 3px 10px;
+    /* font-size: 16pt; */
+    border-radius: 3.2px;
+    background-color: var(--score-color);
+
+}
+
+.scoreStyle {
+    padding: 3px 3px 3px 10px;
+    /* font-size: 16pt; */
+    border-radius: 3.2px;
+    background-color: var(--scoreAlt-color);
+}
+
+@media only screen and (max-width: 768px)
+{
+  .leaderboard{
+    min-height: 100vh; /*Use the whole page even if we don't have a lot of text*/
+    background-color: var(--mainBG-color);
+    color: var(--text-color);
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 8% 2fr 3fr 3fr 2fr 8%;
+    grid-gap: 5px;
+    grid-template-areas: "menu      menu"
+                         "main      main"
+                         "main      main"
+                         "footer   footer";
+  }
+
+  .logo{
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 300px)
+{
+  .leaderboard{
+    min-height: 100vh; /*Use the whole page even if we don't have a lot of text*/
+    background-color: var(--mainBG-color);
+    color: var(--text-color);
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 8% 2fr 3fr 3fr 2fr 8%;
+    grid-gap: 5px;
+    grid-template-areas: "menu"
+                         "main"
+                         "main"
+                         "footer";
+  }
+
+  .logo{
+    display: none;
+  }
+
+  .navbar:
+  {
+    margin: auto;
+    flex-grow: 1;
+  }
+}
+
+/*
+  Recyclage de style.css
+*/
+.navbar-brand, .navbar-brand:hover, .navbar-brand:active {
+    text-align: center;
+    color: var(--navbar-color);
+}
+
+.navButton
+{
+  flex-basis: 20%;
+  flex-shrink: 3;
+}
+
+.btn-primary {
+    background: var(--button-color);
+    border-color: var(--button-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--button-hover-color);
+    border-color: var(--button-hover-color);
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show > .btn-primary.dropdown-toggle {
+    background: var(--navbar-color);
+    border-color: var(--navbar-color);
+}
