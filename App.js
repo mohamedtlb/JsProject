@@ -59,9 +59,9 @@ app.get('/login', function(req, res){
   sess.pswr;
 });
 
-// app.get('/.well-known/acme-challenge/2LDSI0cHfyHD5GuH88LPhEEp2ZIDigcTedRveFtjUD8', async function(req, res) {
-//   res.sendFile(__dirname + 'public/.well-known/acme-challenge/2LDSI0cHfyHD5GuH88LPhEEp2ZIDigcTedRveFtjUD8');
-// });
+app.get('/.well-known/acme-challenge/_X815KAIe-vZx6pcHV9YTva9oKqE3OSSlvnqrnNT3Rs', async function(req, res) {
+  res.send('_X815KAIe-vZx6pcHV9YTva9oKqE3OSSlvnqrnNT3Rs.mB4H3ZfmvCNgp7G3EJBoGFlVXRCgoyB3HE0ghlJCR7U');
+});
 
 app.get('/index', async function(req, res) {
   console.log("In index");
