@@ -62,11 +62,11 @@ app.get('/login', function(req, res){
 app.get('/index', async function(req, res) {
   console.log("In index");
   db = await pool.getConnection(); {
+    if (db.err) throw err; // not connected!
     var sql = `SELECT * FROM questionnaire AS t1 JOIN (SELECT ID_Questionnaire FROM questionnaire ORDER BY RAND() LIMIT 10) as t2 ON t1.ID_Questionnaire=t2.ID_Questionnaire`;
     sql = mysql.format(sql);
     results = await db.query(sql);
-
-
+    db.release();
   }
   //res.sendFile(__dirname + '/index.html');
   console.log(results[0]);
@@ -250,54 +250,75 @@ app.get('/score', async function(req, res) {
 
   db = await pool.getConnection(); {
     if (db.err) throw dr.err; // not connected!
-console.log("Co OK");
-    var toAnon = false;
-    if(typeof sess == 'undefined')
-    {
-      toAnon = true;
-    } else if(typeof sess.email == 'undefined') {
-      toAnon = true;
-    }
-console.log("Anonimity determined");
-    //Rajouter des Orders mais j'suis crevé
-    if(toAnon)
-    {
-      // Associe nom/prenom aux score, ordonne par les meilleurs score en premier et prend les  meilleurs
-      // SELECT * FROM heroku_ba0a838a03c77b3.quiz as q1 JOIN (SELECT nom, prenom, ID_users FROM heroku_ba0a838a03c77b3.users) as u1 ON q1.ID_Users = u1.ID_Users ORDER BY score desc LIMIT 10;
-      var sqlScores = `SELECT * FROM quiz as q1 JOIN (SELECT nom, prenom, ID_users FROM users) as u1 ON q1.ID_Users = u1.ID_Users ORDER BY score desc LIMIT 10`;
+    // Associe nom/prenom aux score, ordonne par les meilleurs score en premier et prend les  meilleurs
+    // SELECT * FROM heroku_ba0a838a03c77b3.quiz as q1 JOIN (SELECT nom, prenom, ID_users FROM heroku_ba0a838a03c77b3.users) as u1 ON q1.ID_Users = u1.ID_Users ORDER BY score desc LIMIT 10;
+    var sqlScores = `SELECT * FROM quiz as q1 JOIN (SELECT nom, prenom, ID_users FROM users) as u1 ON q1.ID_Users = u1.ID_Users ORDER BY score desc LIMIT 10`;
 
-      var resScores = await db.query(sqlScores);
-      console.log("Queried");
-      if(resScores[0].length == 0)
-      {
-        console.log("No Scores for this Account");
-      } else {
-        console.log("length more than 0");
-        res.render('leaderboard',  {scores: resScores[0]});
-      }
+    var resScores = await db.query(sqlScores);
+    console.log("Queried");
+    if(resScores[0].length == 0)
+    {
+      console.log("No Scores in the DB yet");
+      var errorMSG = {text: "Il n'y a pas encore de scores dans la Base de Données, revenez plus tard !"};
+      res.status(418);
+      res.render('error', {error: errorMSG});
     } else {
-      var sqlUserID = `SELECT ID_users FROM users WHERE email LIKE ?`;
-      var insert = [sess.email];
-      sqlUserID = mysql.format(sqlUserID, insert);
-
-      var resUser = await db.query(sqlUserID);
-      var IDUser = resUser[0][0].ID_users;
-
-      var sqlScores = `SELECT * FROM quiz WHERE ID_users = ?`;
-      var insert = [IDUser];
-      sqlScores = mysql.format(sqlScores, insert);
-
-      var resScores = await db.query(sqlScores);
-
-      if(resScores[0].length == 0)
-      {
-        console.log("No Scores for this Account");
-      } else {
-        // Faut que je fasse la vue
-        res.render('scores',  {scores: resScores[0]});
-      }
+      console.log("length more than 0");
+      res.render('leaderboard',  {scores: resScores[0]});
     }
+    db.release();
   }
+    res.end('Boop');
+});
+
+app.get('/myScore', async function(req, res) {
+
+  console.log("In myScore Display");
+
+  db = await pool.getConnection(); {
+    if (db.err) throw dr.err; // not connected!
+
+      var toAnon = false;
+      if(typeof sess == 'undefined')
+      {
+        toAnon = true;
+      } else if(typeof sess.email == 'undefined') {
+        toAnon = true;
+      }
+
+      if(toAnon)
+      {
+        var errorMSG = {text: "Il faut s'identifier pour avoir accès à ses scores."};
+        res.status(418);
+        res.render('error', {error: errorMSG});
+      }else {
+
+        var sqlUserID = `SELECT ID_users FROM users WHERE email LIKE ?`;
+        var insert = [sess.email];
+        sqlUserID = mysql.format(sqlUserID, insert);
+
+        var resUser = await db.query(sqlUserID);
+        var IDUser = resUser[0][0].ID_users;
+
+        var sqlScores = `SELECT * FROM quiz as q1 JOIN (SELECT nom, prenom, ID_users FROM users) as u1 ON q1.ID_Users = u1.ID_Users && q1.ID_Users = ? ORDER BY score desc LIMIT 10`;
+        var insert = [IDUser];
+        sqlScores = mysql.format(sqlScores, insert);
+
+        var resScores = await db.query(sqlScores);
+
+        if(resScores[0].length == 0)
+        {
+          console.log("No Scores for that user in the DB yet");
+          var errorMSG = {text: "Vous n'avez pas encore de score d'enregistré."};
+          res.status(418);
+          res.render('error', {error: errorMSG});
+        } else {
+          res.render('leaderboard',  {scores: resScores[0]});
+        }
+      }
+      db.release();
+    }
+  res.end('Boop');
 });
 
 //When we get a POST request we just display stuff in the console

@@ -28,3 +28,24 @@ $(document).ready(function(){
   }
   scoresList.innerHTML = html;
 });
+
+$(document).ready(function(){
+
+var MyScores = document.getElementById('MyScores');
+
+MyScores.onclick = function() {
+  console.log("You just clicked, didn't you ?");
+
+//The ajax request
+   $.ajax({
+     type: 'GET', //We're sending a POST signal
+     url: '/myScore', //The route we're going to
+     success: function(response){
+       console.log('We do be successful');
+       window.location.replace('/myScore');
+       //location.reload();
+     }
+   });
+   return false;
+ }
+});

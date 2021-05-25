@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <link rel="stylesheet" type="text/css" href="/assets/leaderboard.css">
+      <script src="/assets/ajaxNavGet.js" defer></script>
+      <!-- The scripts necessary for the JQuery/Ajax treatment
+           We'll need to move them to be 'unobtrusive JS' complient-->
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <title>Quiz Educatif!</title>
+  </head>
+
+  <body class = "leaderboard">
+    <header class="logo box">
+      Logo SoonTM
+    </header>
+
+    <nav class="menu box navbar nav-light">
+      <button class="reponse navButton btn btn-primary btn-sm btnOption" id="LinkIndex">
+        Index: Quiz !
+      </button>
+      <button class="reponse navButton btn btn-primary btn-sm btnOption" id="LinkInsertQuestion">
+        Insérez vos questions !
+      </button>
+      <button class="reponse navButton btn btn-primary btn-sm btnOption" id="LinkSignUp">
+        sign Up
+      </button>
+      <button class="reponse navButton btn btn-primary btn-sm btnOption" id="LinkLogin">
+        Login
+      </button>
+    </nav>
+
+    <span class = "main">
+      <%= error.text %>
+    </span>
+
+  </body>
+
+</html>
