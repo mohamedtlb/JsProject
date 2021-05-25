@@ -31,18 +31,33 @@ $(document).ready(function(){
 
 $(document).ready(function(){
 
-var MyScores = document.getElementById('MyScores');
+  var MyScores = document.getElementById('MyScores');
+  var Code = JSON.parse(document.querySelector('#codeJSON').textContent);
+  document.querySelector('#codeJSON').remove();
 
-MyScores.onclick = function() {
-  console.log("You just clicked, didn't you ?");
+  var urlScore = '';
+  if(Code == 1)
+  {
+    console.log("Code 1");
+    urlScore = '/myScore';
+  } else if(Code == 2)
+  {
+    console.log("Code 2");
+    urlScore = '/score';
+    document.getElementById('MyScores').textContent = "Leaderboard";
+  }
 
-//The ajax request
+
+  MyScores.onclick = function() {
+    console.log("You just clicked, didn't you ?");
+
+  //The ajax request
    $.ajax({
      type: 'GET', //We're sending a POST signal
-     url: '/myScore', //The route we're going to
+     url: urlScore, //The route we're going to
      success: function(response){
        console.log('We do be successful');
-       window.location.replace('/myScore');
+       window.location.replace(urlScore);
        //location.reload();
      }
    });

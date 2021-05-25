@@ -260,11 +260,10 @@ app.get('/score', async function(req, res) {
     {
       console.log("No Scores in the DB yet");
       var errorMSG = {text: "Il n'y a pas encore de scores dans la Base de Données, revenez plus tard !"};
-      res.status(418);
       res.render('error', {error: errorMSG});
     } else {
       console.log("length more than 0");
-      res.render('leaderboard',  {scores: resScores[0]});
+      res.render('leaderboard',  {scores: resScores[0], code: 1});
     }
     db.release();
   }
@@ -289,7 +288,6 @@ app.get('/myScore', async function(req, res) {
       if(toAnon)
       {
         var errorMSG = {text: "Il faut s'identifier pour avoir accès à ses scores."};
-        res.status(418);
         res.render('error', {error: errorMSG});
       }else {
 
@@ -310,10 +308,9 @@ app.get('/myScore', async function(req, res) {
         {
           console.log("No Scores for that user in the DB yet");
           var errorMSG = {text: "Vous n'avez pas encore de score d'enregistré."};
-          res.status(418);
           res.render('error', {error: errorMSG});
         } else {
-          res.render('leaderboard',  {scores: resScores[0]});
+          res.render('leaderboard',  {scores: resScores[0], code: 2});
         }
       }
       db.release();

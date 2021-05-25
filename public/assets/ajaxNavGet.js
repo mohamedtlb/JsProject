@@ -10,6 +10,7 @@ $(document).ready(function(){
   var signUp = document.getElementById('LinkSignUp');
   var insertQuestion = document.getElementById('LinkInsertQuestion');
   var index = document.getElementById('LinkIndex');
+  var leaderboard = document.getElementById('LinkLeaderbord');
 
   login.onclick = function() {
     console.log("You just clicked, didn't you ?");
@@ -75,4 +76,19 @@ $(document).ready(function(){
         return false;
       }
 
+      leaderboard.onclick = function() {
+        console.log("You just clicked, didn't you ?");
+
+      //The ajax request
+         $.ajax({
+           type: 'GET', //We're sending a POST signal
+           url: '/score', //The route we're going to
+           success: function(response){
+             console.log('We do be successful');
+             window.location.replace('/score');
+             //location.reload();
+           }
+         });
+         return false;
+       }
  });

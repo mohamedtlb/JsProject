@@ -27,6 +27,9 @@
       <button class="reponse navButton btn btn-primary btn-sm btnOption" id="LinkInsertQuestion">
         Insérez vos questions !
       </button>
+      <button class="reponse navButton btn btn-primary btn-sm btnOption" id="LinkLeaderbord">
+        Leaderboard
+      </button>
       <button class="reponse navButton btn btn-primary btn-sm btnOption" id="LinkSignUp">
         sign Up
       </button>
@@ -52,6 +55,9 @@
          qui contient les questions vers le script du quizz-->
     <span id='variableJSON' hidden>
         <%= JSON.stringify(scores); %>
+    </span>
+    <span id='codeJSON' hidden>
+        <%= JSON.stringify(code); %>
     </span>
 
     <script src="/assets/scoreScript.js"></script>
