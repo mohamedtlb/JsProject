@@ -6,7 +6,7 @@
 const session = require('express-session');
 var express = require('express');
 var mysql = require('mysql2/promise');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 
 var app = express();
 
